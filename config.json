@@ -1,0 +1,4 @@
+{"parentAccount":"inkwell.testnet","dailyCap":40,"maxPerTask":15,"minOrderPrice":30,
+ "split":{"treasury":0.7,"contributors":0.3},
+ "blocklist":["drain-wallet.testnet","scam-agent.testnet"],
+ "killSwitch":false}
