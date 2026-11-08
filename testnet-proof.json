@@ -1,0 +1,193 @@
+[
+  {
+    "t": "2026-11-08T08:00:44.669Z",
+    "type": "demo_start",
+    "note": "Intents settlement is simulated; see README"
+  },
+  {
+    "t": "2026-11-08T08:00:47.748Z",
+    "type": "sale",
+    "id": "order-1",
+    "price": 45,
+    "token": "USDC@base",
+    "escrow": "held on-chain",
+    "tx": "97mwUnqFxJLDThjizDnbpk2U9JxGoPZDYwoYjoM9Yjxy"
+  },
+  {
+    "t": "2026-11-08T08:00:47.748Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 7
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 9
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T08:00:50.885Z",
+    "type": "payout",
+    "order": "order-1",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 7,
+    "tx": "3jg7HixNAHpmkFZAfcxRP3NHdHjVKusVx8YLQo5FZZFE"
+  },
+  {
+    "t": "2026-11-08T08:00:50.885Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 12
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 14
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T08:00:50.885Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 12 above plan 10"
+  },
+  {
+    "t": "2026-11-08T08:00:54.465Z",
+    "type": "payout",
+    "order": "order-1",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 10,
+    "tx": "6w54vNSnzXNiTYKwmRg54Rxp8zEjtNGYqTbxYxJGt3Qa"
+  },
+  {
+    "t": "2026-11-08T08:00:54.465Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 4
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 6
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T08:00:58.486Z",
+    "type": "payout",
+    "order": "order-1",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 4,
+    "tx": "42VDYbpxJ3w2Dh4exLP4erRstk1DvceFReP4BFAQQaN7"
+  },
+  {
+    "t": "2026-11-08T08:00:58.486Z",
+    "type": "delivered",
+    "id": "order-1",
+    "preview": "Thread draft (offline): Why savings circles still beat banks",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T08:01:02.032Z",
+    "type": "distribution",
+    "order": "order-1",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 16.8,
+    "tx": "4qVCLurYosfdzdsWJgy9pg4hqaWbZjZmfzep86SvsoqC"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "distribution",
+    "order": "order-1",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 7.2,
+    "tx": "2CoZvp6hqcXxHmhLZiv5Eb1SvmvDxPq9kC5k8GsrHD38"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "escrow_released",
+    "id": "order-1",
+    "profit": 24,
+    "treasury": 16.8,
+    "contributors": 7.2
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "attack",
+    "what": "prompt-injected manager tries to pay a blocklisted address"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "blocked",
+    "order": "order-2",
+    "task": "write",
+    "agent": "drain-wallet.testnet",
+    "price": 5,
+    "reason": "block: on shared blocklist"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "attack",
+    "what": "manager tries to exceed per-task cap"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "blocked",
+    "order": "order-2",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 99,
+    "reason": "over per-task cap"
+  },
+  {
+    "t": "2026-11-08T08:01:05.735Z",
+    "type": "attack",
+    "what": "bypass the studio, call release for 99 units straight on the contract"
+  },
+  {
+    "t": "2026-11-08T08:01:08.942Z",
+    "type": "chain_rejected",
+    "reason": "{\"index\":0,\"kind\":{\"index\":0,\"kind\":{\"FunctionCallError\":{\"ExecutionError\":\"Smart contract panicked: assertion failed: over per-payout cap\\n    at assert (build"
+  },
+  {
+    "t": "2026-11-08T08:01:08.942Z",
+    "type": "attack",
+    "what": "manager key tries 'refund', a method its function-call key does not allow"
+  },
+  {
+    "t": "2026-11-08T08:01:10.483Z",
+    "type": "chain_rejected",
+    "reason": "Transaction method name refund isn't allowed by the access key"
+  },
+  {
+    "t": "2026-11-08T08:01:10.484Z",
+    "type": "order_rejected",
+    "id": "order-3",
+    "reason": "below minimum price"
+  },
+  {
+    "t": "2026-11-08T08:01:10.484Z",
+    "type": "kill"
+  },
+  {
+    "t": "2026-11-08T08:01:10.484Z",
+    "type": "order_rejected",
+    "id": "order-4",
+    "reason": "kill switch on"
+  }
+]
