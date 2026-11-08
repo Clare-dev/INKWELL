@@ -1,23 +1,34 @@
 <!doctype html><html lang="en" data-theme="light"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("iw-theme")||"light"}catch(e){}</script><title>Place an order · Inkwell</title>
+<style>.chips{display:flex;gap:.45rem;flex-wrap:wrap}.chip{font:600 .8rem 'JetBrains Mono',monospace;padding:.45rem .7rem;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--fg);cursor:pointer}
+.chip[aria-checked=true]{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}.chip[disabled]{opacity:.5;cursor:not-allowed}.chip small{display:block;font-weight:400;font-size:.62rem;color:var(--mu)}
+.pay{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;align-items:center;margin-top:.9rem;padding:1rem;border:1px solid var(--ln);border-radius:10px;background:var(--soft)}
+.qr{background:#fff;padding:.45rem;border-radius:8px}.qr svg{display:block;width:100%;height:auto}.addr{word-break:break-all;font-size:.82rem}@media(max-width:520px){.pay{grid-template-columns:1fr}.qr{max-width:9rem}}</style>
 <body><div id="top"></div><main class="w page"><h1>Place an order</h1><p class="mu" style="max-width:38rem">Order a short X thread. It runs on NEAR testnet with test coins, so it costs nothing.</p>
 <div class="con" style="margin-top:2rem"><div class="card">
 <label for="brief">What should we write?</label><textarea id="brief" maxlength="200">Why savings circles still beat banks</textarea>
-<label for="price">Price in units (30 to 60)</label><input id="price" type="number" value="30" min="30" max="60">
+<div class="g2"><div><label for="fmt">Format</label><select id="fmt"><option>X thread</option><option>Article</option><option>Launch post</option></select></div><div><label for="price">Price in units (30 to 60)</label><input id="price" type="number" value="30" min="30" max="60"></div></div>
+<label id="pl">Pay with</label><div class="chips" role="radiogroup" aria-labelledby="pl"><button type="button" class="chip" role="radio" aria-checked="true">NEAR<small>testnet</small></button><button type="button" class="chip" role="radio" disabled>SOL<small>coming soon</small></button><button type="button" class="chip" role="radio" disabled>ETH<small>coming soon</small></button><button type="button" class="chip" role="radio" disabled>Base<small>coming soon</small></button><button type="button" class="chip" role="radio" disabled>USDC<small>coming soon</small></button><button type="button" class="chip" role="radio" disabled>BTC<small>coming soon</small></button></div>
+<p class="mu" style="font-size:.8rem;margin:.5rem 0 0">Only NEAR testnet is available for now. Other chains arrive with NEAR Intents on mainnet.</p>
+<div class="pay"><div class="qr" id="qr" aria-label="QR code of the studio wallet address"></div><div><span class="mono" style="font-size:.7rem;color:var(--mu)">STUDIO WALLET (TESTNET NEAR)</span><div class="addr mono" id="addr">customer.inkwell.testnet</div><div class="tools" style="margin-top:.5rem"><button type="button" class="btn sm" id="cp">Copy address</button></div><p class="mu" style="font-size:.8rem;margin:.6rem 0 0" id="amt"></p></div></div>
+<p class="mu" style="font-size:.8rem;margin:.5rem 0 0">In this test version the studio covers each order from this wallet, so sending coins is optional. It keeps the demo running.</p>
 <div class="tools" style="margin-top:1.2rem"><button class="btn pri" id="real">Place order on testnet</button><button class="btn" id="go">Preview in browser</button></div>
 <p class="mu" id="msg" style="font-size:.86rem;margin:.8rem 0 0" aria-live="polite">A real order takes about a minute. “Preview” is a simulation that never leaves your browser.</p>
 <details style="margin-top:1.4rem"><summary>Guardrail tests (preview only)</summary><p>Try to break the rules and watch them hold.</p><label>Budget used</label><div class="meter"><i id="mt"></i></div>
 <div class="tools"><button class="btn sm" id="a1">Pay a blocklisted address</button><button class="btn sm" id="a2">Overspend</button><button class="btn sm" id="kill">Kill switch: off</button></div></details></div>
 <div><div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div><div class="card" id="draft" hidden style="margin-top:1rem"><span class="eyebrow">Your draft</span><div id="dt" style="white-space:pre-wrap;font-size:.95rem"></div></div></div></div></main>
-<div id="foot"></div><script src="assets/config.js"></script><script src="assets/site.js"></script>
+<div id="foot"></div><script src="assets/config.js"></script><script src="assets/qrcode.js"></script><script src="assets/site.js"></script>
 <script>
 const E=i=>document.getElementById(i),log=(t,d)=>IW.add(E('tl'),t,d),msg=t=>E('msg').textContent=t,sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const REPO='Clare-dev/INKWELL';
+const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
+try{const q=qrcode(0,'M');q.addData(ADDR);q.make();E('qr').innerHTML=q.createSvgTag(4,1)}catch(e){E('qr').textContent=''}
+const amt=()=>E('amt').textContent='Suggested amount: '+((+E('price').value||30)*0.001).toFixed(3)+' NEAR';amt();E('price').oninput=amt;
+E('cp').onclick=async()=>{try{await navigator.clipboard.writeText(ADDR);E('cp').textContent='Copied'}catch(e){E('cp').textContent='Select the address to copy'}setTimeout(()=>E('cp').textContent='Copy address',1800)};
 E('real').onclick=async()=>{
   if(!window.IW_RELAY)return msg('Real orders are being switched on. Please try again soon, or use the preview.');
-  const brief=E('brief').value.trim(),price=+E('price').value;if(!brief)return msg('Please add a topic.');
+  const brief=E('brief').value.trim(),price=+E('price').value,kind=E('fmt').value;if(!brief)return msg('Please add a topic.');
   E('real').disabled=true;E('tl').textContent='';E('draft').hidden=true;msg('Sending your order…');
   try{
-    const r=await fetch(window.IW_RELAY,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief,price})}),j=await r.json();
+    const r=await fetch(window.IW_RELAY,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief:'['+kind+'] '+brief,price})}),j=await r.json();
     if(!r.ok)throw new Error(j.error||'Something went wrong.');
     msg('Order accepted. Running on NEAR testnet, about a minute…');const url=`https://raw.githubusercontent.com/${REPO}/main/orders/web-${j.id}.json`,t0=Date.now();
     while(Date.now()-t0<240000){await sleep(5000);const f=await fetch(url+'?t='+Date.now());

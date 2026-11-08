@@ -40,6 +40,10 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 - Change the account names in `config.json` to your own, then: `NEAR_OWNER_KEY=ed25519:... npm run build:contract && npm run setup && npm run sim:chain`.
 - Keys are written to `.keys.json`, which is gitignored. Never commit it.
 
+## Payments
+- **Only NEAR testnet works today.** The order page shows a QR code and the address of the studio's demo wallet. In this test version the studio funds orders from that wallet, so sending coins is optional; it just keeps the wallet topped up. Payment is not yet checked per order.
+- **Other chains are not live.** SOL, ETH, Base and other deposits are shown as "coming soon". The plan is to use NEAR Intents on mainnet so customers can deposit from other chains. NEAR Intents has no testnet, so this cannot be shown here.
+
 ## Rules the studio enforces (`config.json`)
 Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% treasury / 30% contributors, a payee blocklist, and a kill switch. Each payout must pass the kill switch, the payee check (allow / warn / block), and both caps. The contract adds its own per-payout cap of 0.25 NEAR, fixed when it was deployed.
 
