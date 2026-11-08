@@ -24,6 +24,7 @@ jobs:
           INKWELL_KEYS: keys.json
           KEYS_JSON: ${{ secrets.INKWELL_KEYS_JSON }}
           NEAR_AI_API_KEY: ${{ secrets.NEAR_AI_API_KEY }}
+          NEAR_AI_MODEL: ${{ secrets.NEAR_AI_MODEL }}
           ISSUE_BODY: ${{ github.event.issue.body }}
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ISSUE_USER: ${{ github.event.issue.user.login }}
