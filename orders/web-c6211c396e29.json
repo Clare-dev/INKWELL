@@ -1,0 +1,154 @@
+[
+  {
+    "t": "2026-11-08T23:39:00.578Z",
+    "type": "order_from_web",
+    "id": "c6211c396e29"
+  },
+  {
+    "t": "2026-11-08T23:39:03.001Z",
+    "type": "sale",
+    "id": "web-c6211c396e29",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "rKZJjwgCTPBwVsxseDJXbvqrngWoq5fbvhQftt9Wo8Z"
+  },
+  {
+    "t": "2026-11-08T23:39:03.001Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 9
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 10
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:39:03.001Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 9 above plan 8"
+  },
+  {
+    "t": "2026-11-08T23:39:05.879Z",
+    "type": "payout",
+    "order": "web-c6211c396e29",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 8,
+    "tx": "AURtFs8bpdfcJmNWYgWPvWUYG34z9sXo9zYKWikDJ4zF"
+  },
+  {
+    "t": "2026-11-08T23:39:05.879Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 13
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 11
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:39:05.879Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 11 above plan 10"
+  },
+  {
+    "t": "2026-11-08T23:39:09.610Z",
+    "type": "payout",
+    "order": "web-c6211c396e29",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "price": 10,
+    "tx": "Chtp3aon7abp2zpF7dhbM5kX3qCiquKpapSPytDnAgmM"
+  },
+  {
+    "t": "2026-11-08T23:39:09.610Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 5
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:39:13.803Z",
+    "type": "payout",
+    "order": "web-c6211c396e29",
+    "task": "factcheck",
+    "agent": "f2.inkwell.testnet",
+    "price": 4,
+    "tx": "C4fE2isvP3rzdbBWTb3jfpcagqpQKKcS8s4bLFJzLcSr"
+  },
+  {
+    "t": "2026-11-08T23:39:14.411Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "085bffe417cf231f...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T23:40:47.555Z",
+    "type": "delivered",
+    "id": "web-c6211c396e29",
+    "preview": "1/ Millions of people worldwide still save money in circles of friends instead o",
+    "text": "1/ Millions of people worldwide still save money in circles of friends instead of banks. That's not inertia — savings circles quietly beat banks on several fronts. Here's why they endure:\n\n2/ The mechanics are simple: everyone contributes a fixed amount on a regular schedule, and the whole pot goes to one member each round. It rotates until everyone has taken a turn. Then the circle can start over.\n\n3/ They exist everywhere under local names: tandas in Mexico, susus in West Africa and the Caribbean, stokvels in South Africa, hui in China, arisan in Indonesia. One model, refined over centuries.\n\n4/ Advantage 1: no gatekeeping. No minimum balance, no monthly fees, no credit check, no paperwork. Your seat at the table comes from trust — not a credit score or a documented address.\n\n5/ Advantage 2: speed. Contribute $100 monthly and alone you'd wait a year to hold $1,200. In a 12-person circle, the first draw hands you $1,200 on day one. It's borrowing from your future self, at zero interest.\n\n6/ Advantage 3: discipline. A savings account can be raided anytime; a circle can't be quietly skipped. Your coworkers, neighbors, or family know when you've paid. Peer accountability is the commitment device banks can't sell.\n\n7/ Advantage 4: privacy. Research in Kenya found women joined savings circles partly to shield money from being claimed by others in the household. Bank balances invite pressure; a group commitment is harder to touch.\n\n8/ Advantage 5: reach. Roughly 1.4 billion adults worldwide are unbanked. Savings circles need no branch, no smartphone, no forms — just a meeting, a ledger, and people who keep their word.\n\n9/ Honest caveats: real risk exists. If a member defaults, everyone suffers. There's no deposit insurance and little legal recourse. Circles run on trust — which is both their strength and their fragility.\n\n10/ Banks win on scale, safety nets, and formal credit. Circles win on access, discipline, and dignity for the people banks overlook. That's why, after centuries, the circle keeps turning.",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T23:40:51.158Z",
+    "type": "distribution",
+    "order": "web-c6211c396e29",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 5.6,
+    "tx": "4zuaPonpBRHNuupHq7MftwLGryzKdsPQH495Bb9UGZeL"
+  },
+  {
+    "t": "2026-11-08T23:40:55.076Z",
+    "type": "distribution",
+    "order": "web-c6211c396e29",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.4,
+    "tx": "Dg67Ra8n9Luk1mD4RXkM9bJV4sbTgD8XBshcqqqkAqA4"
+  },
+  {
+    "t": "2026-11-08T23:40:55.076Z",
+    "type": "escrow_released",
+    "id": "web-c6211c396e29",
+    "profit": 8,
+    "treasury": 5.6,
+    "contributors": 2.4
+  }
+]
