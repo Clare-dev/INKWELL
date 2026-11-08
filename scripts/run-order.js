@@ -10,7 +10,7 @@ try {
   const since = new Date(Date.now() - 3600e3).toISOString().slice(0, 19) + 'Z';
   const q = encodeURIComponent(`repo:${repo} author:${user} label:order created:>=${since}`);
   const r = await (await fetch(`https://api.github.com/search/issues?q=${q}`, { headers: { authorization: `Bearer ${GH_TOKEN}` } })).json();
-  if (r.total_count > 1) done('Order rejected: one order per person per hour, to protect the shared testnet funds. Please try again later.');
+  if (user !== process.env.GITHUB_REPOSITORY_OWNER && r.total_count > 1) done('Order rejected: one order per person per hour, to protect the shared testnet funds. Please try again later.');
   const B = (a, p, f) => ({ agent: a + '.' + cfg.parentAccount, price: p, floor: f }), j = x => Math.floor(Math.random() * x);
   const bid = (a, plan) => { const p = plan + j(5) - 1; return B(a, p, p - 1 - j(4)); };
   const bidders = { research: [bid('r1', 8), bid('r2', 8)], write: [bid('w1', 10), bid('w2', 10)], factcheck: [bid('f1', 5), bid('f2', 5)] };
