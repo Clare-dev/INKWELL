@@ -1,4 +1,4 @@
-// NOT COMPILED OR DEPLOYED YET. near-sdk-js escrow: one NEAR-held escrow per order.
+// near-sdk-js escrow: one NEAR-held escrow per order. Build: npm run build:contract
 import { NearBindgen, near, call, view, initialize, assert, NearPromise } from 'near-sdk-js';
 @NearBindgen({})
 export class Escrow {
@@ -11,13 +11,15 @@ export class Escrow {
   @call({}) release({ id, payee, amount }) {   // the manager's function-call key may ONLY call this
     assert(near.predecessorAccountId() === this.manager, 'manager only');
     const o = this.orders[id], a = BigInt(amount);
+    assert(o, 'no such order');
     assert(a <= BigInt(this.cap), 'over per-payout cap');
     assert(BigInt(o.released) + a <= BigInt(o.amount), 'over escrow');
     o.released = (BigInt(o.released) + a).toString();
     return NearPromise.new(payee).transfer(a);
   }
   @call({}) refund({ id }) {
-    const o = this.orders[id]; assert(near.predecessorAccountId() === o.payer, 'payer only');
+    const o = this.orders[id]; assert(o, 'no such order');
+    assert(near.predecessorAccountId() === o.payer, 'payer only');
     const left = BigInt(o.amount) - BigInt(o.released); o.released = o.amount;
     return NearPromise.new(o.payer).transfer(left);
   }

@@ -1,1 +1,5 @@
-{"name":"inkwell","version":"0.1.0","type":"module","license":"MIT","scripts":{"sim":"node src/sim.js","serve":"cd web && python3 -m http.server 8080"}}
+{"name":"inkwell","version":"0.2.0","type":"module","license":"MIT",
+ "scripts":{"sim":"node src/sim.js","sim:chain":"INKWELL_MODE=chain node src/sim.js","serve":"cd web && python3 -m http.server 8080",
+  "build:contract":"near-sdk-js build contract/escrow.js build/escrow.wasm","setup":"node scripts/setup.js"},
+ "dependencies":{"near-api-js":"^5.1.1"},
+ "devDependencies":{"near-sdk-js":"^2.0.0"}}

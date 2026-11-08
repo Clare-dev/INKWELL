@@ -5,7 +5,7 @@
 body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,serif;padding:2rem 1rem}
 main{max-width:46rem;margin:auto}h1{font-size:2.4rem;margin:0}p{color:var(--mut)}
 .r{display:grid;grid-template-columns:8rem 1fr;gap:.75rem;padding:.6rem 0;border-top:1px solid color-mix(in srgb,var(--ink) 15%,transparent)}
-.k{font:600 .85rem ui-monospace,monospace}.blocked,.walk_away,.order_rejected,.kill{color:var(--bad)}.payout,.sale,.escrow_released{color:var(--ok)}
+.k{font:600 .85rem ui-monospace,monospace}.blocked,.chain_rejected,.walk_away,.order_rejected,.kill{color:var(--bad)}.payout,.sale,.escrow_released,.distribution{color:var(--ok)}.chain_rejected{color:var(--bad)}a{color:var(--ok)}
 code{font:.8rem ui-monospace,monospace;color:var(--mut);word-break:break-word}</style>
 <main><h1>Inkwell ledger</h1><p>Every sale, bid, payout and refusal, in order. Run <code>npm run sim</code> first.</p><div id=l></div></main>
-<script>fetch('ledger.json').then(r=>r.json()).then(a=>l.innerHTML=a.map(e=>{const{t,type,...d}=e;return`<div class=r><span class="k ${type}">${type}</span><code>${JSON.stringify(d)}</code></div>`}).join('')).catch(()=>l.textContent='No ledger yet. Run npm run sim, then npm run serve.')</script>
+<script>fetch('ledger.json').then(r=>r.json()).then(a=>l.innerHTML=a.map(e=>{const{t,type,...d}=e;return`<div class=r><span class="k ${type}">${type}</span><code>${JSON.stringify(d)}${d.tx?` <a href="https://testnet.nearblocks.io/txns/${d.tx}">view tx</a>`:''}</code></div>`}).join('')).catch(()=>l.textContent='No ledger yet. Run npm run sim, then npm run serve.')</script>
