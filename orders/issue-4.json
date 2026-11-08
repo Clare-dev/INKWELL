@@ -1,0 +1,147 @@
+[
+  {
+    "t": "2026-11-08T17:16:56.443Z",
+    "type": "order_from_github",
+    "issue": "4",
+    "user": "Clare-dev"
+  },
+  {
+    "t": "2026-11-08T17:16:58.858Z",
+    "type": "sale",
+    "id": "issue-4",
+    "price": 45,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "HVHfesXkzCkxZt64doTKpkFD1od8s2uTYhDvWkqJctRM"
+  },
+  {
+    "t": "2026-11-08T17:16:58.858Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 9
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 7
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T17:17:02.024Z",
+    "type": "payout",
+    "order": "issue-4",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "price": 7,
+    "tx": "8e29hYdFjgqRQ7Rq2Wh8dnvPN4bpp4wwuZsZjGSab8Ca"
+  },
+  {
+    "t": "2026-11-08T17:17:02.024Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 13
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 11
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T17:17:02.024Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 11 above plan 10"
+  },
+  {
+    "t": "2026-11-08T17:17:06.129Z",
+    "type": "payout",
+    "order": "issue-4",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "price": 10,
+    "tx": "EwAvFJJiMogjbXsuX4AR1nPvLx9ocquFJ4DMGhtbEVxf"
+  },
+  {
+    "t": "2026-11-08T17:17:06.129Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 7
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T17:17:09.667Z",
+    "type": "payout",
+    "order": "issue-4",
+    "task": "factcheck",
+    "agent": "f2.inkwell.testnet",
+    "price": 4,
+    "tx": "H244Yi2QzWpQT8z9cN5VCGb1dGiiBREhLFYqCyHEmF1d"
+  },
+  {
+    "t": "2026-11-08T17:17:10.074Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "7678dc624499be63...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T17:18:03.320Z",
+    "type": "delivered",
+    "id": "issue-4",
+    "preview": "Quick honesty note before the thread: I can't verify any published works, findin",
+    "text": "Quick honesty note before the thread: I can't verify any published works, findings, or claims for a researcher under the handle \"clareonchain\" — so I won't invent specifics. Here's a clean, ready-to-fill draft instead. Send me her actual papers/posts (titles, links, key findings) and I'll finalize it with real data.\n\n---\n\n**1/** New research spotlight: @clareonchain 🧵\n\nHer recent work focuses on [core area — e.g., on-chain analytics / MEV / DeFi risk]. A breakdown of what she's published lately and why it matters 👇\n\n**2/** The problem she tackles: [one-line problem]. Most analysis in this space [common limitation]. Her angle: [methodological approach].\n\n**3/** Recent work #1 — \"[title]\" ([venue/date])\n→ Key finding: [finding]\n→ Why it matters: [implication for builders/researchers]\n\n**4/** Recent work #2 — \"[title]\" ([venue/date])\n→ She shows that [finding]\n→ Practical takeaway: [actionable insight]\n\n**5/** Recent work #3 — \"[title]\" ([venue/date])\n→ [Finding], challenging the assumption that [common belief]\n\n**6/** Method-wise, her work stands out for [data sources / tooling / rigor]. She publishes via [Dune / GitHub / Substack / arXiv / protocol forums].\n\n**7/** Open questions she's circling next: [question 1], [question 2]. Worth following if you care about [field].\n\n**8/** Receipts & follow:\n→ [link to work 1]\n→ [link to work 2]\n→ [@handle]\n\nAll claims above trace directly to her published work — no speculation.\n\n---\n\nPaste her 2–3 most recent pieces and I'll fill every bracket, tighten each tweet under 280 chars, and ship the final version.",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T17:18:07.015Z",
+    "type": "distribution",
+    "order": "issue-4",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 16.8,
+    "tx": "7MEJjc41GMPyj5js5VpXFLMHGFcpMkXdB7RgKGhryC2k"
+  },
+  {
+    "t": "2026-11-08T17:18:10.741Z",
+    "type": "distribution",
+    "order": "issue-4",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 7.2,
+    "tx": "DM2RwjEgmeDeqUEbs8RRnyhfDwBduGnTxd5mnKShvACi"
+  },
+  {
+    "t": "2026-11-08T17:18:10.741Z",
+    "type": "escrow_released",
+    "id": "issue-4",
+    "profit": 24,
+    "treasury": 16.8,
+    "contributors": 7.2
+  }
+]
