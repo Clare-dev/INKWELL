@@ -1,28 +1,69 @@
-# Inkwell: an AI content studio that runs itself
-A manager agent takes content orders, hires specialist agents through sealed-bid auctions, pays them from a capped budget, and splits the profit. Humans only edit `config.json`.
+# Inkwell
 
-## Try it (no keys, no network)
-1. `npm run sim` -> prints "Done" and writes `web/ledger.json`.
-2. `npm run serve`, open http://localhost:8080 -> see sale, bids, a counter-offer, payouts, then **blocked** lines for a blocklisted payee and an over-cap payment, and order rejections from the minimum price and the kill switch.
-Optional: set `NEAR_AI_API_KEY` and `NEAR_AI_MODEL` to draft with NEAR AI Cloud.
+An AI content studio that runs itself on NEAR. A customer orders a short X thread. A manager agent holds the payment in an escrow contract, hires specialist agents through sealed bids, pays them within human-set limits, has a private model write the draft, and splits the profit. Humans only edit the rules in `config.json`.
 
-## Tracks and how to verify
+**The problem:** letting software spend money is risky. Inkwell shows one way to make it safe: the manager's key can call only one contract function, with a cap, so the limits are enforced by the blockchain and not by trusting the code.
+
+**Status:** runs on NEAR **testnet** (test coins only). Live page: https://clare-dev.github.io/INKWELL/
+
+## NEAR tools used
+
+| Tool | What it does here | Where |
+|---|---|---|
+| Function-call access key | The manager can only call `release` on the escrow. Its full-access key is deleted after setup. | `scripts/setup.js` |
+| Smart contract (near-sdk-js) | Escrow: holds each order's payment, releases it in capped payouts, refuses the rest. | `contract/escrow.js` |
+| Sub-accounts | Each agent, the customer, treasury and contributors are sub-accounts of `inkwell.testnet`. | `config.json`, `scripts/setup.js` |
+| NEAR AI Cloud (private inference, attestation) | The draft is written by the TEE model `z-ai/glm-5.3-flash`. A fresh attestation is fetched with a random nonce before each draft. | `src/ai.js` |
+
+NEAR Intents is **not** used. The customer's "pay with" token is a label only (see "What is real" below).
+
+## Try it: do X, see Y
+
+**1. Place a real testnet order (no setup, needs a GitHub account)**
+- Do: open https://github.com/Clare-dev/INKWELL/issues/new?template=order.yml, type a topic, keep the price at 45, submit.
+- See: within about a minute a bot replies on the issue with six "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and the draft. Example: issue #4 in this repo.
+- Limits: one order per person per hour, price 30 to 60 units (1 unit = 0.01 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
+
+**2. Check the attestation line**
+- Do: read the bot's reply from step 1.
+- See: `nonce echoed = true, Intel quote present = true`. This means the attestation came back, repeated our one-time nonce, and contained a quote. We do not verify the quote's signature ourselves; the full check is at https://cloud.near.ai/verify.
+
+**3. See the chain refuse an attack**
+- Do: open `testnet-proof.json` and find the two `chain_rejected` rows.
+- See: `over per-payout cap` (the contract refused a payout of 99 units) and `method name refund isn't allowed by the access key` (the manager's key tried a function it does not have). The row before each is the attempt.
+
+**4. Run the offline simulation (no keys, no network)**
+- Do: `npm install`, then `npm run sim`, then `npm run serve` and open http://localhost:8080
+- See: a ledger with `sale`, `bids_revealed`, `counter`, `payout`, `escrow_released`, then red `blocked` rows (a blocklisted payee, an over-cap payment), `order_rejected` (below the minimum price) and `order_rejected` after the kill switch.
+
+**5. Run chain mode yourself (needs your own testnet account)**
+- Change the account names in `config.json` to your own, then: `NEAR_OWNER_KEY=ed25519:... npm run build:contract && npm run setup && npm run sim:chain`.
+- Keys are written to `.keys.json`, which is gitignored. Never commit it.
+
+## Rules the studio enforces (`config.json`)
+Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% treasury / 30% contributors, a payee blocklist, and a kill switch. Each payout must pass the kill switch, the payee check (allow / warn / block), and both caps. The contract adds its own per-payout cap (25 units).
+
+## Tracks and how to verify them
 | Track | Feature | Check |
 |---|---|---|
-| Autonomous Business | `config.json` rules, kill switch, public ledger | step 2 |
-| AI Swarms | sealed bids, scripted bidders, no LLM needed | `bids_revealed` rows |
-| Agent Economy | counter-offer once, then accept or walk, per-task payout records | `counter`, `payout` rows |
-| AI Security & Defense | payee check (allow/warn/block), caps, attack demo | `blocked` rows |
+| AI Security & Defense | Restricted function-call key, chain-enforced refusals, payee check, attack demo | Step 3 |
+| Autonomous Business | Rules in config, kill switch, public ledger, treasury split | Steps 1 and 4 |
+| AI Swarms | Sealed bids from agent sub-accounts, scripted bidders needing no LLM | `bids_revealed` rows |
+| Agent Economy | Manager counters once, then accepts or walks away; every payout is a transaction | `counter`, `payout` rows |
+| Privacy & Private AI | Draft written on a TEE model; attestation fetched with a fresh nonce | Step 2 |
 
-## Run it on NEAR testnet (chain mode)
-1. `npm i && npm run build:contract` (compiles `contract/escrow.js` to `build/escrow.wasm`).
-2. `NEAR_OWNER_KEY=ed25519:... npm run setup`: creates `escrow/manager/customer/treasury/contributors` and the six bidder sub-accounts under `inkwell.testnet`, deploys + inits the escrow, gives the manager a function-call key limited to `release` on the escrow, then deletes the manager's full-access key. Needs about 10 NEAR in the owner account. Writes `.keys.json` (gitignored).
-3. `npm run sim:chain`, then `npm run serve`: ledger rows now carry real tx hashes with a "view tx" link. Two extra attacks run against the live contract: an over-cap `release` and a method the manager's key is not allowed to call. Both should show as `chain_rejected`.
-1 studio unit = 0.01 NEAR in chain mode (`config.json` -> `chain`).
+## What is real, and what is not
+- **Real, on testnet:** escrow deployment, deposits, payouts, profit split, key restriction, on-chain refusals, the private-model draft and its attestation fetch.
+- **Simulated:** the customer's payment token (NEAR Intents has no testnet), the bidders' prices (scripted with random variation), and the browser console on the live page (runs locally, not on-chain).
+- **Not done:** full cryptographic verification of the attestation quote; mainnet deployment; a security audit.
 
-## Honest status
-- Real and runnable offline: all logic in `src/`, the simulation, the ledger page.
-- **Run on NEAR testnet on 2026-11-08.** The escrow is deployed at `escrow.inkwell.testnet` ([explorer](https://testnet.nearblocks.io/address/escrow.inkwell.testnet)). `npm run setup` created the accounts, deployed and initialised the contract, and deleted the manager's full-access key. `npm run sim:chain` then ran a full order with real transactions: escrow deposit, sealed-bid payouts, and the treasury and contributor split. The complete ledger from that run, including every transaction hash, is saved in [`testnet-proof.json`](testnet-proof.json).
-- Intents payments are still simulated (no testnet exists), so the sale shows a token label only. NEAR AI attestation is not wired in, so we do not claim the Privacy track.
-- The deposit is made by a `customer` demo account, not by a real Intents swap.
-Baseline vs hackathon work: everything here was written during the hackathon window. License: MIT.
+## Baseline vs hackathon work, and disclosures
+- All code in this repository was written during the NEAR HACKATHON window. There is no pre-hackathon baseline.
+- Libraries: `near-api-js` (runtime), `near-sdk-js` (build only). The live page loads fonts from Google Fonts.
+- Built with the help of an AI coding assistant (Claude by Anthropic).
+
+## Security notes
+Keys are never committed. The GitHub order flow keeps the manager's keys and the NEAR AI key in GitHub secrets, and treats the issue text as data only: it is parsed, never run as code. The escrow contract has not been audited.
+
+## License
+MIT. See `LICENSE`.
