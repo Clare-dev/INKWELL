@@ -1,0 +1,33 @@
+<!doctype html><html lang="en" data-theme="light"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="color-scheme" content="light dark"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/site.css"><script>try{document.documentElement.dataset.theme=localStorage.getItem("iw-theme")||"light"}catch(e){}</script><title>Place an order · Inkwell</title>
+<body><div id="top"></div><main class="w page"><h1>Place an order</h1><p class="mu" style="max-width:38rem">Try the studio below, or place a real order on NEAR testnet. Test coins only.</p>
+<div class="con" style="margin-top:2rem"><div class="card">
+<label for="brief">What should we write?</label><textarea id="brief">Why savings circles still beat banks</textarea>
+<div class="g2"><div><label for="fmt">Format</label><select id="fmt"><option>X thread</option><option>Article</option><option>Launch post</option></select></div><div><label for="token">Pay with</label><select id="token"><option>USDC@base</option><option>NEAR</option><option>USDT@eth</option><option>SOL</option></select></div></div>
+<label for="price">Price in units (minimum 30)</label><input id="price" type="number" value="45" min="1">
+<div class="tools" style="margin-top:1.2rem"><button class="btn pri" id="go">Run the studio</button><a class="btn" href="https://github.com/Clare-dev/INKWELL/issues/new?template=order.yml" target="_blank" rel="noopener">Place a real testnet order ↗</a></div>
+<p class="mu" style="font-size:.85rem;margin:.8rem 0 0">“Run the studio” is a simulation in your browser. A real order opens a short form and replies with transaction links in about a minute.</p>
+<details style="margin-top:1.4rem"><summary>Guardrail tests</summary><p>Try to break the rules and watch them hold.</p><label>Budget used</label><div class="meter"><i id="mt"></i></div>
+<div class="tools"><button class="btn sm" id="a1">Pay a blocklisted address</button><button class="btn sm" id="a2">Overspend</button><button class="btn sm" id="kill">Kill switch: off</button></div></details></div>
+<div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div></div></main>
+<div id="foot"></div><script src="assets/site.js"></script>
+<script>
+const CFG={cap:40,per:15,min:30,sp:[.7,.3],block:['drain-wallet.testnet','scam-agent.testnet'],par:'inkwell.testnet'};
+let spent=0,killed=false,oid=0;const E=i=>document.getElementById(i),log=(t,d)=>IW.add(E('tl'),t,d),meter=()=>E('mt').style.width=Math.min(100,spent/CFG.cap*100)+'%';
+const chk=a=>CFG.block.includes(a)?['block','on the shared blocklist']:a.endsWith('.'+CFG.par)?['allow','']:['warn','not a studio account'];
+function pay(order,task,agent,price){const no=r=>(log('blocked',{order,task,agent,price,reason:r}),false);
+ if(killed)return no('kill switch is on');const[v,w]=chk(agent);if(v!=='allow')return no(v+': '+w);
+ if(price>CFG.per)return no('over the per-task cap');if(spent+price>CFG.cap)return no('over the daily cap (resets on reload)');
+ spent+=price;meter();log('payout',{order,task,agent,price});return true}
+const rn=n=>Math.floor(Math.random()*n);
+function auction(task,plan,ids){const b=ids.map(i=>{const p=plan+rn(5)-1;return{agent:i+'.'+CFG.par,price:p,floor:p-1-rn(4)}});
+ log('bids_revealed',{task,bids:b.map(({agent,price})=>({agent,price}))});const w=b.sort((x,y)=>x.price-y.price)[0];
+ if(w.price<=plan)return w;log('counter',{agent:w.agent,offered:plan});if(w.floor<=plan)return{...w,price:plan};log('walk_away',{agent:w.agent});return null}
+E('go').onclick=()=>{const id='order-'+(++oid),price=+E('price').value;
+ if(killed)return log('order_rejected',{id,reason:'kill switch is on'});if(!(price>=CFG.min))return log('order_rejected',{id,reason:'below the minimum price of 30'});
+ log('sale',{id,price,token:E('token').value,escrow:'held (simulated)'});let cost=0;
+ for(const[t,p,i]of[['research',8,['r1','r2']],['write',10,['w1','w2']],['factcheck',5,['f1','f2']]]){const w=auction(t,p,i);if(w&&pay(id,t,w.agent,w.price))cost+=w.price}
+ const pr=price-cost;log('delivered',{id});log('escrow_released',{id,profit:pr,treasury:+(pr*CFG.sp[0]).toFixed(2),contributors:+(pr*CFG.sp[1]).toFixed(2)})};
+E('a1').onclick=()=>{log('attack',{what:'A manipulated manager tries to pay a blocklisted address'});pay('attack','write','drain-wallet.testnet',5)};
+E('a2').onclick=()=>{log('attack',{what:'The manager tries to pay 99 units on one task'});pay('attack','write','w1.'+CFG.par,99)};
+E('kill').onclick=e=>{killed=!killed;log(killed?'kill':'resume',{});e.target.textContent='Kill switch: '+(killed?'on':'off')};
+</script>
