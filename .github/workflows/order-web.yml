@@ -1,0 +1,43 @@
+name: Process web order
+on:
+  workflow_dispatch:
+    inputs:
+      brief: { description: Topic, required: true, type: string }
+      price: { description: Price in units, required: true, type: string }
+      order_id: { description: Order id, required: true, type: string }
+permissions:
+  contents: write
+concurrency:
+  group: orders
+  cancel-in-progress: false
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 50 }
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --omit=dev --ignore-scripts
+      - name: Run order
+        env:
+          INKWELL_MODE: chain
+          INKWELL_KEYS: keys.json
+          KEYS_JSON: ${{ secrets.INKWELL_KEYS_JSON }}
+          NEAR_AI_API_KEY: ${{ secrets.NEAR_AI_API_KEY }}
+          NEAR_AI_MODEL: ${{ secrets.NEAR_AI_MODEL }}
+          BRIEF: ${{ inputs.brief }}
+          PRICE: ${{ inputs.price }}
+          ORDER_ID: ${{ inputs.order_id }}
+        run: |
+          printf '%s' "$KEYS_JSON" > keys.json
+          node scripts/run-web-order.js
+          rm -f keys.json
+      - name: Save the ledger
+        if: always()
+        run: |
+          git config user.name inkwell-bot
+          git config user.email inkwell-bot@users.noreply.github.com
+          git add orders 2>/dev/null && git commit -m "web order ${{ inputs.order_id }}" || exit 0
+          for i in 1 2 3; do git pull --rebase && git push && break; sleep 3; done
