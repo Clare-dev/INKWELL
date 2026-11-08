@@ -1,0 +1,146 @@
+[
+  {
+    "t": "2026-11-08T23:41:22.920Z",
+    "type": "order_from_web",
+    "id": "e2d2b2e54860"
+  },
+  {
+    "t": "2026-11-08T23:41:25.029Z",
+    "type": "sale",
+    "id": "web-e2d2b2e54860",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "HRji7hEEd5p6VhMNKarPfMv2HzEND2MRLxLXLUQYbsGf"
+  },
+  {
+    "t": "2026-11-08T23:41:25.029Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 10
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 11
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:41:25.029Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 10 above plan 8"
+  },
+  {
+    "t": "2026-11-08T23:41:28.230Z",
+    "type": "payout",
+    "order": "web-e2d2b2e54860",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 8,
+    "tx": "4ZJsP87XaHnPZxwi5EYwNBzZWXJ3rqcnscWJZmcAAE34"
+  },
+  {
+    "t": "2026-11-08T23:41:28.230Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 10
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 11
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:41:31.572Z",
+    "type": "payout",
+    "order": "web-e2d2b2e54860",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 10,
+    "tx": "Ct8ciHP2GPNpL1wvaZeFLHo1DLw3VhsXJGuArLtqXPxT"
+  },
+  {
+    "t": "2026-11-08T23:41:31.572Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 5
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 8
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:41:35.057Z",
+    "type": "payout",
+    "order": "web-e2d2b2e54860",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 5,
+    "tx": "HQq8hvtyfx7EZRptJdKNr8eff83defq56dKqrGqcMSdZ"
+  },
+  {
+    "t": "2026-11-08T23:41:35.456Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "28c98990016bc395...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T23:42:06.143Z",
+    "type": "delivered",
+    "id": "web-e2d2b2e54860",
+    "preview": "# Why Savings Circles Still Beat Banks\n\n## What They Are\n\nSavings circles—known ",
+    "text": "# Why Savings Circles Still Beat Banks\n\n## What They Are\n\nSavings circles—known around the world as *susus*, *tandas*, *hui*, *arisan*, or *chit funds*—are among humanity's oldest financial tools. Members contribute a fixed amount on a regular schedule, and each person takes the whole pot in turn. Simple, human, and remarkably durable, these groups continue to thrive everywhere from Lagos to Los Angeles, even as formal banking spreads.\n\n## Zero Fees, Zero Barriers\n\nBanks charge for the privilege of holding your money: maintenance fees, minimum-balance penalties, overdraft charges, transfer costs. Savings circles charge nothing. There is no application, no credit check, no ID paperwork, and no branch to reach. For newcomers, migrants, or anyone without a stable address, that absence of bureaucracy is not a nicety—it is the difference between saving and not saving. The World Bank's Global Findex surveys have consistently found more than a billion adults worldwide without a bank account, and informal groups remain a primary way many of them manage money.\n\n## Discipline Through Community\n\nBehavioral economics keeps rediscovering what grandmothers always knew: we keep promises to people better than we keep promises to ourselves. A savings circle builds commitment into the calendar. Missing a contribution means facing your neighbor, not an anonymous app notification. That social accountability is why participants so reliably see the plan through—something a bank savings account, with no structure and no stakes, rarely achieves.\n\n## Instant Lump Sums, No Debt\n\nWhen your turn comes, you receive a substantial sum immediately—money you can use for tuition, a repair, or stock for a small business. You never pay interest, because you are not borrowing; you are simply receiving early what you will contribute later. For people excluded from affordable credit, a circle functions as an interest-free loan market built on trust.\n\n## The Honest Caveats\n\nNone of this means circles are risk-free. If a member defaults or disappears, there is usually no legal recourse or deposit insurance. The organizer bears real administrative burdens. Savings earn no interest, and large sums change hands informally. Anyone joining should know the other members well and set clear rules.\n\n## The Bottom Line\n\nSavings circles beat banks not by out-engineering them but by out-relating them. They cost nothing, exclude no one, enforce discipline through friendship, and turn saving into a social act. For hundreds of millions of people, that combination still beats anything a bank counter can offer.",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T23:42:09.952Z",
+    "type": "distribution",
+    "order": "web-e2d2b2e54860",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 4.9,
+    "tx": "57xhjmYYD3D9enNRE9E5VbLBg7iLdstF5QiKDSztLost"
+  },
+  {
+    "t": "2026-11-08T23:42:14.242Z",
+    "type": "distribution",
+    "order": "web-e2d2b2e54860",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.1,
+    "tx": "zVTwPp14LmrqHajw9m6DsWDc2WjyJQfeb61AwDxWB9R"
+  },
+  {
+    "t": "2026-11-08T23:42:14.242Z",
+    "type": "escrow_released",
+    "id": "web-e2d2b2e54860",
+    "profit": 7,
+    "treasury": 4.9,
+    "contributors": 2.1
+  }
+]
