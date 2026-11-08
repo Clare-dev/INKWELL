@@ -23,6 +23,9 @@ function fmt(t,d){switch(t){
  case'attack':return['Attack attempt',d.what];
  case'blocked':return['Blocked',`${d.agent} · ${d.reason}`];
  case'chain_rejected':return['Refused on-chain',/per-payout cap/.test(d.reason)?'The contract refused: over the per-payout cap':/allowed by the access key/.test(d.reason)?'The access key refused: method not allowed':'Refused by the contract'];
+ case'attestation':return['Private model attested',`${d.model} · nonce echoed: ${d.nonce_echoed} · hardware quote present: ${d.has_intel_quote}`];
+ case'order_from_web':return['Order accepted','Running on NEAR testnet'];
+ case'ai_failed':return['Writer fallback','The private model was unavailable, so a placeholder draft was used'];
  case'order_rejected':return['Order rejected',`${d.id} · ${d.reason}`];
  case'kill':return['Kill switch on','All payments and orders are halted'];
  case'resume':return['Kill switch off','Studio resumed'];
