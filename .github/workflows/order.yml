@@ -1,0 +1,45 @@
+name: Process order
+on:
+  issues:
+    types: [opened]
+permissions:
+  contents: write
+  issues: write
+concurrency:
+  group: orders
+  cancel-in-progress: false
+jobs:
+  run:
+    if: contains(github.event.issue.labels.*.name, 'order')
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm install --omit=dev --ignore-scripts
+      - name: Run order
+        env:
+          INKWELL_MODE: chain
+          INKWELL_KEYS: keys.json
+          KEYS_JSON: ${{ secrets.INKWELL_KEYS_JSON }}
+          NEAR_AI_API_KEY: ${{ secrets.NEAR_AI_API_KEY }}
+          ISSUE_BODY: ${{ github.event.issue.body }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_USER: ${{ github.event.issue.user.login }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          printf '%s' "$KEYS_JSON" > keys.json
+          node scripts/run-order.js
+          rm -f keys.json
+      - name: Reply on the issue
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+        run: gh issue comment "$N" --body-file result.md
+      - name: Save the ledger
+        run: |
+          git config user.name inkwell-bot
+          git config user.email inkwell-bot@users.noreply.github.com
+          git add orders 2>/dev/null && git commit -m "order ${{ github.event.issue.number }}" && git pull --rebase && git push || true
