@@ -1,0 +1,154 @@
+[
+  {
+    "t": "2026-11-08T23:31:34.821Z",
+    "type": "order_from_web",
+    "id": "2ebaef28b97d"
+  },
+  {
+    "t": "2026-11-08T23:31:37.559Z",
+    "type": "sale",
+    "id": "web-2ebaef28b97d",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "FwnTLFPcjqw6khjVXkobahrJiTzBika5TtHviEiSJWTt"
+  },
+  {
+    "t": "2026-11-08T23:31:37.559Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 11
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 9
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:31:37.559Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 9 above plan 8"
+  },
+  {
+    "t": "2026-11-08T23:31:40.901Z",
+    "type": "payout",
+    "order": "web-2ebaef28b97d",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "price": 8,
+    "tx": "3yAp4UNPDScwDME4LJZrbb6AFWPR91RutSr8UhtPZzuS"
+  },
+  {
+    "t": "2026-11-08T23:31:40.901Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 12
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 12
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:31:40.901Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 12 above plan 10"
+  },
+  {
+    "t": "2026-11-08T23:31:45.097Z",
+    "type": "payout",
+    "order": "web-2ebaef28b97d",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 10,
+    "tx": "7eSPEDtGw6ntBYbzij9BtvecGKv949QpSxCqHjqeN1wo"
+  },
+  {
+    "t": "2026-11-08T23:31:45.097Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 5
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 6
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:31:49.135Z",
+    "type": "payout",
+    "order": "web-2ebaef28b97d",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 5,
+    "tx": "ucgrP8f58HMZaCt6AGGfvi1wXiBz7vY2x9G55BcmDNB"
+  },
+  {
+    "t": "2026-11-08T23:31:49.610Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "78e97a1d66c27bf8...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T23:34:55.121Z",
+    "type": "delivered",
+    "id": "web-2ebaef28b97d",
+    "preview": "**1/** Banks promise to grow your money. Savings circles — tandas, susus, hui, e",
+    "text": "**1/** Banks promise to grow your money. Savings circles — tandas, susus, hui, equbs, chit funds — promise something different: you *will* save. Centuries later, they're still winning on the things small savers actually need. 🧵\n\n**2/** The mechanism: a group contributes a fixed amount every cycle. The pot goes to one member each round — by set order, lottery, or bid — until everyone has taken it. No branch, no paperwork, no app required.\n\n**3/** Why it works 1/ — commitment. A bank balance is one tap from being spent. A circle payment is gone the moment you make it; you only recover it by staying in. Kenyan fieldwork (\"You Can't Save Alone,\" Gugerty 2007) found this is exactly why people join.\n\n**4/** 2/ — social collateral replaces credit scores. Miss a payment and the penalty isn't a fee; it's face and future access. Anderson & Baland (2002) found married women in Kenyan circles saved measurably more than non-members — the group shields cash from daily claims on it.\n\n**5/** 3/ — a lump sum on day one. Ten friends × $100/month = a $1,000 pot every month. An early taker effectively gets an interest-free ~$900 loan, no collateral, no credit history. Banks can't serve people without scores — and 1.4B adults still have no bank account at all (World Bank Findex).\n\n**6/** 4/ — fees don't scale. On small balances, banks often cost more than the money earns: ~$25–35 per overdraft in the US, plus monthly maintenance unless minimums are met. A circle charges exactly $0 and happily handles $5 contributions.\n\n**7/** 5/ — it runs on relationships, not branches. That's why circles thrive where banks don't reach: market traders, migrant workers, villages. And group saving stays common even among people who *have* accounts.\n\n**8/** The honest catch: no deposit insurance. One defaulter mid-cycle, or an organizer who vanishes, sinks it. That's why circles work best small, among people you know, with the rotation set publicly — and why Kenyan chamas now keep records and move money over mobile payments.\n\n**9/** Even regulators hedge: India licenses chit funds under the Chit Funds Act (1982). Informal ≠ illegal — it just means enforcement comes from reputation instead of courts.\n\n**10/** Verdict: banks are safer vaults. Circles are better coaches. For small, regular savers they deliver discipline, zero fees, and score-free access to lump sums. Banks hold your money. Circles make you keep it.\n\n**11/** Sources: Gugerty, *You Can't Save Alone* (J. Development Economics, 2007); ",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T23:35:00.288Z",
+    "type": "distribution",
+    "order": "web-2ebaef28b97d",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 4.9,
+    "tx": "CtzJvJDG4ezfELCzV5vDCceMUMNuFELCbDmk1WvzFQds"
+  },
+  {
+    "t": "2026-11-08T23:35:04.083Z",
+    "type": "distribution",
+    "order": "web-2ebaef28b97d",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.1,
+    "tx": "47emaFfiEqiXwERHiKsW8N3zhXcmZ8vBFwgjEEQMDQhf"
+  },
+  {
+    "t": "2026-11-08T23:35:04.083Z",
+    "type": "escrow_released",
+    "id": "web-2ebaef28b97d",
+    "profit": 7,
+    "treasury": 4.9,
+    "contributors": 2.1
+  }
+]
