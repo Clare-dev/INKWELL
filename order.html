@@ -2,7 +2,8 @@
 <style>.chips{display:flex;gap:.45rem;flex-wrap:wrap}.chip{font:600 .8rem 'JetBrains Mono',monospace;padding:.45rem .7rem;border-radius:8px;border:1px solid var(--ln);background:var(--bg);color:var(--fg);cursor:pointer}
 .chip[aria-checked=true]{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac)}.chip[disabled]{opacity:.5;cursor:not-allowed}.chip small{display:block;font-weight:400;font-size:.62rem;color:var(--mu)}
 .pay{display:grid;grid-template-columns:7.5rem 1fr;gap:1rem;align-items:center;margin-top:.9rem;padding:1rem;border:1px solid var(--ln);border-radius:10px;background:var(--soft)}
-.qr{background:#fff;padding:.45rem;border-radius:8px}.qr svg{display:block;width:100%;height:auto}.addr{word-break:break-all;font-size:.82rem}@media(max-width:520px){.pay{grid-template-columns:1fr}.qr{max-width:9rem}}</style>
+.qr{background:#fff;padding:.45rem;border-radius:8px}.qr svg{display:block;width:100%;height:auto}.addr{word-break:break-all;font-size:.82rem}@media(max-width:520px){.pay{grid-template-columns:1fr}.qr{max-width:9rem}}@media print{body>*:not(#printarea){display:none!important}#printarea{display:block!important;color:#000;background:#fff;font:12pt/1.55 Georgia,serif}#printarea h1{font:700 20pt Georgia,serif;margin:0 0 .3rem}#printarea .meta{color:#555;font:9pt monospace;margin-bottom:1rem}#printarea pre{white-space:pre-wrap;font:inherit;margin:0}#printarea .foot{margin-top:1.5rem;color:#555;font:9pt monospace}}
+#printarea{display:none}</style>
 <body><div id="top"></div><main class="w page"><h1>Place an order</h1><p class="mu" style="max-width:38rem">Order a short X thread. It runs on NEAR testnet with test coins, so it costs nothing.</p>
 <div class="con" style="margin-top:2rem"><div class="card">
 <label for="brief">What should we write?</label><textarea id="brief" maxlength="200">Why savings circles still beat banks</textarea>
@@ -15,11 +16,11 @@
 <p class="mu" id="msg" style="font-size:.86rem;margin:.8rem 0 0" aria-live="polite">A real order takes about a minute. “Preview” is a simulation that never leaves your browser.</p>
 <details style="margin-top:1.4rem"><summary>Guardrail tests (preview only)</summary><p>Try to break the rules and watch them hold.</p><label>Budget used</label><div class="meter"><i id="mt"></i></div>
 <div class="tools"><button class="btn sm" id="a1">Pay a blocklisted address</button><button class="btn sm" id="a2">Overspend</button><button class="btn sm" id="kill">Kill switch: off</button></div></details></div>
-<div><div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div><div class="card" id="draft" hidden style="margin-top:1rem"><span class="eyebrow">Your draft</span><div id="dt" style="white-space:pre-wrap;font-size:.95rem"></div></div></div></div></main>
-<div id="foot"></div><script src="assets/config.js"></script><script src="assets/qrcode.js"></script><script src="assets/site.js"></script>
+<div><div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div><div class="card" id="draft" hidden style="margin-top:1rem"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem"><span class="eyebrow" style="margin:0">Your draft</span><div class="tools" style="margin:0"><button type="button" class="btn sm" id="dcopy">Copy</button><button type="button" class="btn sm" id="dpdf">Download as PDF</button></div></div><div style="height:.7rem"></div><div id="dt" style="white-space:pre-wrap;font-size:.95rem"></div></div></div></div></main>
+<div id="printarea"><h1 id="pt"></h1><div class="meta" id="pm"></div><pre id="pb"></pre><div class="foot" id="pf2"></div></div><div id="foot"></div><script src="assets/config.js"></script><script src="assets/qrcode.js"></script><script src="assets/site.js"></script>
 <script>
 const E=i=>document.getElementById(i),log=(t,d)=>IW.add(E('tl'),t,d),msg=t=>E('msg').textContent=t,sleep=ms=>new Promise(r=>setTimeout(r,ms));
-const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
+let last=null;const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
 try{const q=qrcode(0,'M');q.addData(ADDR);q.make();E('qr').innerHTML=q.createSvgTag(4,1)}catch(e){E('qr').textContent=''}
 const amt=()=>E('amt').textContent='Suggested amount: '+((+E('price').value||30)*0.001).toFixed(3)+' NEAR';amt();E('price').oninput=amt;
 E('cp').onclick=async()=>{try{await navigator.clipboard.writeText(ADDR);E('cp').textContent='Copied'}catch(e){E('cp').textContent='Select the address to copy'}setTimeout(()=>E('cp').textContent='Copy address',1800)};
@@ -33,7 +34,7 @@ E('real').onclick=async()=>{
     msg('Order accepted. Running on NEAR testnet, about a minute…');const url=`https://raw.githubusercontent.com/${REPO}/main/orders/web-${j.id}.json`,t0=Date.now();
     while(Date.now()-t0<240000){await sleep(5000);const f=await fetch(url+'?t='+Date.now());
       if(f.ok){const L=await f.json();L.forEach(({t,type,...d})=>log(type,d));const dl=L.find(e=>e.type==='delivered');
-        if(dl&&dl.text){E('dt').textContent=dl.text;E('draft').hidden=false}msg(dl?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
+        if(dl&&dl.text){E('dt').textContent=dl.text;E('draft').hidden=false;last={kind,brief,id:j.id,text:dl.text}}msg(dl?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
     msg('This is taking longer than usual. Please check the Proof page or try again.');
   }catch(e){msg(e.message)}finally{E('real').disabled=false}};
 const CFG={cap:40,per:15,min:30,sp:[.7,.3],block:['drain-wallet.testnet','scam-agent.testnet'],par:'inkwell.testnet'};
@@ -55,4 +56,8 @@ E('go').onclick=()=>{const id='preview-'+(++oid),price=+E('price').value;E('draf
 E('a1').onclick=()=>{log('attack',{what:'A manipulated manager tries to pay a blocklisted address'});pay('attack','write','drain-wallet.testnet',5)};
 E('a2').onclick=()=>{log('attack',{what:'The manager tries to pay 99 units on one task'});pay('attack','write','w1.'+CFG.par,99)};
 E('kill').onclick=e=>{killed=!killed;log(killed?'kill':'resume',{});e.target.textContent='Kill switch: '+(killed?'on':'off')};
+
+E('dcopy').onclick=async()=>{if(!last)return;try{await navigator.clipboard.writeText(last.text);E('dcopy').textContent='Copied'}catch(e){E('dcopy').textContent='Select the text to copy'}setTimeout(()=>E('dcopy').textContent='Copy',1800)};
+E('dpdf').onclick=()=>{if(!last)return;E('pt').textContent=last.brief.slice(0,90);E('pm').textContent=last.kind+' · written by Inkwell on NEAR testnet';E('pb').textContent=last.text;
+ E('pf2').textContent='Order '+last.id+' · '+new Date().toISOString().slice(0,10)+' · test coins only';const t=document.title;document.title='Inkwell - '+last.brief.slice(0,40);window.print();setTimeout(()=>document.title=t,500)};
 </script>
