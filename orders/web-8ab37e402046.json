@@ -1,0 +1,13 @@
+[
+  {
+    "t": "2026-11-08T23:14:30.357Z",
+    "type": "order_from_web",
+    "id": "8ab37e402046"
+  },
+  {
+    "t": "2026-11-08T23:14:31.121Z",
+    "type": "order_rejected",
+    "id": "web-8ab37e402046",
+    "reason": "escrow deposit failed: Sender customer.inkwell.testnet does not have enough balance 0.1470757833416275 for operation costing 0.3309191246093035"
+  }
+]
