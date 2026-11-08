@@ -16,7 +16,7 @@
   "networkId": "testnet",
   "rpc": "https://test.rpc.fastnear.com",
   "explorer": "https://testnet.nearblocks.io/txns/",
-  "unitNear": 0.01,
+  "unitNear": 0.001,
   "capUnits": 25,
   "escrow": "escrow.inkwell.testnet",
   "manager": "manager.inkwell.testnet",
