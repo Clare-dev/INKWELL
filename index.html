@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Inkwell · The AI content studio that runs itself</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=JetBrains+Mono:wght@400;600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0c0f;--p:#11151a;--p2:#171c23;--ln:#232a33;--tx:#e9eef3;--mu:#8b97a5;--ac:#7dffb3;--ac2:#3fd6ff;--bad:#ff6b6b;--r:14px;color-scheme:dark}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(900px 500px at 80% -10%,#10301f66,transparent),var(--bg);color:var(--tx);font:16px/1.6 Inter,system-ui,sans-serif;padding-top:env(safe-area-inset-top)}
+a{color:inherit;text-decoration:none}.w{max-width:70rem;margin:auto;padding:0 1.2rem}
+h1,h2,h3{font-family:'Bricolage Grotesque',Inter,sans-serif;margin:0;letter-spacing:-.02em}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1.1rem 0}
+.logo{font:800 1.4rem 'Bricolage Grotesque',sans-serif}.logo i{color:var(--ac);font-style:normal}
+.nl{display:flex;gap:1.4rem;align-items:center;font-size:.92rem;color:var(--mu)}.nl a:hover{color:var(--tx)}
+.pill{font:600 .72rem 'JetBrains Mono',monospace;color:var(--ac);border:1px solid #7dffb344;background:#7dffb312;padding:.3rem .65rem;border-radius:99px}
+.pill:before{content:'';display:inline-block;width:.45rem;height:.45rem;background:var(--ac);border-radius:50%;margin-right:.45rem;box-shadow:0 0 10px var(--ac)}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:3rem;align-items:center;padding:4.5rem 0 3rem}
+h1{font-size:clamp(2.6rem,6vw,4.6rem);line-height:1;font-weight:800}h1 em{font-style:normal;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{color:var(--mu);font-size:1.15rem;max-width:34rem;margin:1.3rem 0 1.8rem}
+.btn{display:inline-block;font:600 .95rem Inter,sans-serif;padding:.85rem 1.3rem;border-radius:10px;border:1px solid var(--ln);cursor:pointer;color:var(--tx);background:var(--p2)}
+.btn.pri{background:var(--ac);color:#04140b;border-color:var(--ac)}.btn.pri:hover{filter:brightness(1.08)}.btn:hover{border-color:#3a4552}
+.card{background:var(--p);border:1px solid var(--ln);border-radius:var(--r);padding:1.2rem}
+.floor .row{display:flex;justify-content:space-between;padding:.7rem 0;border-top:1px solid var(--ln);font-size:.9rem}.floor .row:first-of-type{border:0}
+.floor .row b{font:600 .85rem 'JetBrains Mono',monospace;color:var(--ac)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:var(--r);overflow:hidden;margin:1rem 0 4rem}
+.stats div{background:var(--p);padding:1.2rem}.stats b{display:block;font:700 2rem 'Bricolage Grotesque',sans-serif}.stats span{color:var(--mu);font-size:.85rem}
+section{padding:2.2rem 0}h2{font-size:clamp(1.8rem,3.5vw,2.5rem);margin-bottom:.5rem}.sub{color:var(--mu);max-width:40rem;margin:0 0 1.8rem}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}.steps .card b{font:600 .75rem 'JetBrains Mono',monospace;color:var(--ac)}.steps h3{font-size:1.15rem;margin:.5rem 0 .3rem}.steps p{margin:0;color:var(--mu);font-size:.92rem}
+.con{display:grid;grid-template-columns:.9fr 1.1fr;gap:1rem}
+label{display:block;font:600 .72rem 'JetBrains Mono',monospace;color:var(--mu);text-transform:uppercase;letter-spacing:.06em;margin:1rem 0 .35rem}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--ln);color:var(--tx);border-radius:10px;padding:.75rem;font:inherit}
+input:focus,select:focus,textarea:focus{outline:2px solid #7dffb355;border-color:var(--ac)}textarea{resize:vertical;min-height:5.5rem}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
+.meter{height:6px;background:var(--p2);border-radius:9px;overflow:hidden;margin:.4rem 0 1rem}.meter i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--ac),var(--ac2));transition:width .4s}
+.tl{max-height:30rem;overflow:auto;padding-right:.3rem}.tl:empty:before{content:'Your order will play out here, step by step.';color:var(--mu);font-size:.92rem}
+.ev{display:grid;grid-template-columns:.7rem 1fr;gap:.8rem;padding:.55rem 0}.ev:before{content:'';width:.55rem;height:.55rem;border-radius:50%;background:var(--mu);margin-top:.5rem}
+.ev.ok:before{background:var(--ac)}.ev.bad:before{background:var(--bad)}.ev.in:before{background:var(--ac2)}
+.ev b{display:block;font:600 .72rem 'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.05em;color:var(--mu)}.ev.ok b{color:var(--ac)}.ev.bad b{color:var(--bad)}
+.ev span{font-size:.92rem;word-break:break-word}.ev a{color:var(--ac2);font-size:.82rem;margin-left:.4rem}
+.tools{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}.tools .btn{font-size:.82rem;padding:.55rem .8rem}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:1rem}.two h3{font-size:1.1rem;margin-bottom:.6rem}.two li{color:var(--mu);margin:.4rem 0;font-size:.93rem}.two ul{padding-left:1.1rem;margin:0}
+.yes li::marker{color:var(--ac)}.no li::marker{color:var(--ac2)}
+footer{border-top:1px solid var(--ln);margin-top:3rem;padding:2rem 0 3rem;color:var(--mu);font-size:.88rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+@media(max-width:820px){.hero,.con,.two,.steps{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.nl a:not(.pill){display:none}.hero{padding-top:2.5rem}}
+</style>
+<body>
+<div class="w">
+<nav><a class="logo" href="#">ink<i>well</i></a><div class="nl"><a href="#how">How it works</a><a href="#order">Order</a><a href="#proof">On-chain proof</a><a href="https://github.com/Clare-dev/INKWELL">GitHub</a><span class="pill">NEAR TESTNET</span></div></nav>
+
+<header class="hero">
+<div><h1>Content, written by a studio with <em>no staff.</em></h1>
+<p class="lead">Order a thread or article. A manager agent hires specialist agents through sealed bids, pays them from a capped budget held in escrow, and settles on NEAR. Humans only set the rules.</p>
+<a class="btn pri" href="#order">Place an order</a> <a class="btn" href="#proof">See the on-chain proof</a></div>
+<div class="card floor"><div class="mono" style="font-size:.72rem;color:var(--mu)">STUDIO RULES · SET BY A HUMAN</div>
+<div class="row"><span>Daily spend cap</span><b>40 units</b></div><div class="row"><span>Max per task</span><b>15 units</b></div><div class="row"><span>Minimum order</span><b>30 units</b></div><div class="row"><span>Profit split</span><b>70% / 30%</b></div><div class="row"><span>Manager key</span><b>release() only</b></div></div>
+</header>
+
+<div class="stats"><div><b id="s1">–</b><span>real transactions on testnet</span></div><div><b id="s2">–</b><span>attacks refused by the chain</span></div><div><b>3</b><span>agent roles bidding per order</span></div><div><b>0</b><span>humans in the payment loop</span></div></div>
+
+<section id="how"><h2>How an order works</h2><p class="sub">Every step is a recorded event, and the money never sits with a person.</p>
+<div class="steps"><div class="card"><b>01</b><h3>Order &amp; escrow</h3><p>The customer pays, and the money is locked in an escrow contract on NEAR.</p></div>
+<div class="card"><b>02</b><h3>Sealed bids</h3><p>Researcher, writer and fact-checker agents bid. Bids are revealed together and the manager counters once.</p></div>
+<div class="card"><b>03</b><h3>Guarded payouts</h3><p>Each payment passes a kill switch, a payee check and spending caps before it is released.</p></div>
+<div class="card"><b>04</b><h3>Profit split</h3><p>On delivery the escrow releases the remainder to the treasury and contributors automatically.</p></div></div></section>
+
+<section id="order"><h2>Place an order</h2><p class="sub">This console runs the studio in your browser as a simulation. No wallet, no keys, nothing leaves your device. The real on-chain run is below.</p>
+<div class="con"><div class="card">
+<label for="brief">What should we write?</label><textarea id="brief">Why savings circles still beat banks</textarea>
+<div class="g2"><div><label for="fmt">Format</label><select id="fmt"><option>X thread</option><option>Article</option><option>Launch post</option></select></div><div><label for="token">Pay with</label><select id="token"><option>USDC@base</option><option>NEAR</option><option>USDT@eth</option><option>SOL</option></select></div></div>
+<label for="price">Price (units, minimum 30)</label><input id="price" type="number" value="45" min="1">
+<label>Budget used today</label><div class="meter"><i id="mt"></i></div>
+<button class="btn pri" id="go" style="width:100%">Place order</button>
+<div class="tools"><button class="btn" id="a1">Attack: blocklisted payee</button><button class="btn" id="a2">Attack: overspend</button><button class="btn" id="kill">Kill switch: off</button></div>
+</div>
+<div class="card"><div class="mono" style="font-size:.72rem;color:var(--mu);margin-bottom:.5rem">LIVE STUDIO ACTIVITY</div><div class="tl" id="tl"></div></div></div></section>
+
+<section id="proof"><h2>Proof on NEAR testnet</h2><p class="sub">A full order run from 8 November 2026. Every row with a link is a real transaction you can open in the public explorer, including two attacks the blockchain refused on its own.</p>
+<div class="card"><div class="tl" id="pf">Loading…</div></div></section>
+
+<section><h2>What’s real, and what isn’t</h2><p class="sub">We label this clearly, because judges and customers deserve it.</p>
+<div class="two"><div class="card yes"><h3>Real, on testnet</h3><ul><li>Escrow contract deployed at escrow.inkwell.testnet</li><li>Deposits, payouts and the profit split as signed transactions</li><li>Manager key limited to one function, with a per-payout cap</li><li>Refusals enforced by the contract and the access key</li></ul></div>
+<div class="card no"><h3>Simulated for now</h3><ul><li>The customer’s payment token: NEAR Intents has no testnet</li><li>The browser console above runs locally, not on-chain</li><li>The writing step uses a placeholder draft until NEAR AI is wired in</li></ul></div></div></section>
+
+<footer><span>Inkwell · built for NEAR HACKATHON 2026</span><span><a href="https://github.com/Clare-dev/INKWELL">Source code</a> · <a href="https://testnet.nearblocks.io/address/escrow.inkwell.testnet">Escrow contract</a></span></footer>
+</div>
+<script>
+const CFG={cap:40,per:15,min:30,sp:[.7,.3],block:['drain-wallet.testnet','scam-agent.testnet'],par:'inkwell.testnet'};
+let spent=0,killed=false,oid=0;const $=i=>document.getElementById(i),sh=a=>a.split('.')[0];
+const OK=['sale','payout','delivered','distribution','escrow_released','resume'],BAD=['blocked','chain_rejected','order_rejected','kill','walk_away'];
+function fmt(t,d){switch(t){
+ case'sale':return['Order received',`${d.id} · ${d.price} units · paid in ${d.token} · escrow ${d.escrow}`];
+ case'bids_revealed':return['Sealed bids revealed',`${d.task}: `+d.bids.map(b=>`${sh(b.agent)} ${b.price}`).join(' vs ')];
+ case'counter':return['Counter-offer',`${sh(d.agent)} quoted above plan; manager offered ${d.offered}`];
+ case'walk_away':return['Manager walked away',sh(d.agent)+' would not meet the plan'];
+ case'payout':return['Payout',`${d.task} → ${d.agent} · ${d.price} units`];
+ case'delivered':return['Delivered',`${d.id} passed the fact-check`];
+ case'distribution':return['Profit split',`${d.kind} receives ${d.amount} units`];
+ case'escrow_released':return['Escrow released',`profit ${d.profit} · treasury ${d.treasury} · contributors ${d.contributors}`];
+ case'attack':return['Attack attempt',d.what];
+ case'blocked':return['Blocked',`${d.agent} · ${d.reason}`];
+ case'chain_rejected':return['Refused on-chain',/per-payout cap/.test(d.reason)?'Contract refused: over the per-payout cap':/allowed by the access key/.test(d.reason)?'Access key refused: that method is not allowed':'Refused by the contract'];
+ case'order_rejected':return['Order rejected',`${d.id} · ${d.reason}`];
+ case'kill':return['Kill switch on','All payments and orders are halted'];
+ case'resume':return['Kill switch off','Studio resumed'];
+ default:return[t.replace(/_/g,' '),d.note||'']}}
+function add(box,t,d){const{tx,...r}=d||{},[h,x]=fmt(t,r),e=document.createElement('div');e.className='ev '+(OK.includes(t)?'ok':BAD.includes(t)?'bad':'in');
+ const b=document.createElement('b');b.textContent=h;const s=document.createElement('span');s.textContent=x;
+ if(tx){const a=document.createElement('a');a.href='https://testnet.nearblocks.io/txns/'+tx;a.target='_blank';a.rel='noopener';a.textContent='view tx ↗';s.append(a)}
+ const w=document.createElement('div');w.append(b,s);e.append(w);box.append(e);box.scrollTop=box.scrollHeight}
+const log=(t,d)=>add($('tl'),t,d),meter=()=>$('mt').style.width=Math.min(100,spent/CFG.cap*100)+'%';
+const chk=a=>CFG.block.includes(a)?['block','on the shared blocklist']:a.endsWith('.'+CFG.par)?['allow','']:['warn','not a studio account'];
+function pay(order,task,agent,price){const no=r=>(log('blocked',{order,task,agent,price,reason:r}),false);
+ if(killed)return no('kill switch is on');const[v,w]=chk(agent);if(v!=='allow')return no(v+': '+w);
+ if(price>CFG.per)return no('over the per-task cap');if(spent+price>CFG.cap)return no('over the daily cap (resets on reload)');
+ spent+=price;meter();log('payout',{order,task,agent,price});return true}
+const rn=n=>Math.floor(Math.random()*n);
+function auction(task,plan,ids){const b=ids.map(i=>{const p=plan+rn(5)-1;return{agent:i+'.'+CFG.par,price:p,floor:p-1-rn(4)}});
+ log('bids_revealed',{task,bids:b.map(({agent,price})=>({agent,price}))});const w=b.sort((x,y)=>x.price-y.price)[0];
+ if(w.price<=plan)return w;log('counter',{agent:w.agent,offered:plan});if(w.floor<=plan)return{...w,price:plan};log('walk_away',{agent:w.agent});return null}
+$('go').onclick=()=>{const id='order-'+(++oid),price=+$('price').value;
+ if(killed)return log('order_rejected',{id,reason:'kill switch is on'});if(!(price>=CFG.min))return log('order_rejected',{id,reason:'below the minimum price of 30'});
+ log('sale',{id,price,token:$('token').value,escrow:'held (simulated)'});let cost=0;
+ for(const[t,p,i]of[['research',8,['r1','r2']],['write',10,['w1','w2']],['factcheck',5,['f1','f2']]]){const w=auction(t,p,i);if(w&&pay(id,t,w.agent,w.price))cost+=w.price}
+ const pr=price-cost;log('delivered',{id});log('escrow_released',{id,profit:pr,treasury:+(pr*CFG.sp[0]).toFixed(2),contributors:+(pr*CFG.sp[1]).toFixed(2)})};
+$('a1').onclick=()=>{log('attack',{what:'A manipulated manager tries to pay a blocklisted address'});pay('attack','write','drain-wallet.testnet',5)};
+$('a2').onclick=()=>{log('attack',{what:'The manager tries to pay 99 units on one task'});pay('attack','write','w1.'+CFG.par,99)};
+$('kill').onclick=e=>{killed=!killed;log(killed?'kill':'resume',{});e.target.textContent='Kill switch: '+(killed?'ON':'off')};
+fetch('testnet-proof.json').then(r=>r.json()).then(a=>{$('pf').textContent='';let tx=0,rj=0;a.forEach(({t,type,...d})=>{if(d.tx)tx++;if(type==='chain_rejected')rj++;add($('pf'),type,d)});
+ $('pf').scrollTop=0;$('s1').textContent=tx;$('s2').textContent=rj}).catch(()=>{$('pf').textContent='Could not load testnet-proof.json.'});
+</script>
+</html>
