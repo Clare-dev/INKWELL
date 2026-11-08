@@ -1,0 +1,21 @@
+name: Place an order
+description: Order a short X thread from the Inkwell studio (NEAR testnet)
+title: "[order] "
+labels: ["order"]
+body:
+  - type: markdown
+    attributes:
+      value: "Test version on NEAR testnet. Test coins only. One order per person per hour."
+  - type: textarea
+    attributes:
+      label: What should we write?
+      description: A topic, in a sentence or two.
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Price in units
+      description: A number from 30 to 60. One unit is 0.01 testnet NEAR.
+      value: "45"
+    validations:
+      required: true
