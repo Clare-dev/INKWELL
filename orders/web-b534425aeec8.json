@@ -1,0 +1,146 @@
+[
+  {
+    "t": "2026-11-08T23:53:24.822Z",
+    "type": "order_from_web",
+    "id": "b534425aeec8"
+  },
+  {
+    "t": "2026-11-08T23:53:26.785Z",
+    "type": "sale",
+    "id": "web-b534425aeec8",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "FbCwHVyJj541qEVd3Hjv7H33tZqKpCrQ2pTrNDjRq6Ax"
+  },
+  {
+    "t": "2026-11-08T23:53:26.785Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 8
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 9
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:53:29.489Z",
+    "type": "payout",
+    "order": "web-b534425aeec8",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 8,
+    "tx": "4uG2eJ1eU8ZUaQcA8e5wUji8yWn7NAqPBdd5qLQeRZqq"
+  },
+  {
+    "t": "2026-11-08T23:53:29.489Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 13
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 12
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:53:29.489Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 12 above plan 10"
+  },
+  {
+    "t": "2026-11-08T23:53:33.168Z",
+    "type": "payout",
+    "order": "web-b534425aeec8",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "price": 10,
+    "tx": "7aZkNUY9kLySeWoZqPbV4VEsUnj4pYgZCznCLHiKS93Z"
+  },
+  {
+    "t": "2026-11-08T23:53:33.168Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 7
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 4
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T23:53:36.629Z",
+    "type": "payout",
+    "order": "web-b534425aeec8",
+    "task": "factcheck",
+    "agent": "f2.inkwell.testnet",
+    "price": 4,
+    "tx": "CVXFZpXqyyYXTzMR9sFTpWPRnnBgkuXUDr9WQk4p3JWt"
+  },
+  {
+    "t": "2026-11-08T23:53:36.808Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "cf943cd66052d5eb...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T23:56:05.888Z",
+    "type": "delivered",
+    "id": "web-b534425aeec8",
+    "preview": "**1/** NEAR Protocol is a proof-of-stake layer-1 blockchain built for scale and ",
+    "text": "**1/** NEAR Protocol is a proof-of-stake layer-1 blockchain built for scale and usability. Smart contracts compile to WebAssembly, and users get human-readable accounts like alice.near instead of hex addresses.\n\n**2/** Sharding — Nightshade: the network behaves as one logical blockchain split into parallel shards. Each shard produces a \"chunk\" of transactions; a block combines chunks from all shards, so capacity grows as shards are added via resharding.\n\n**3/** Stateless validation: validators verify cryptographic proofs rather than storing full chain state locally. Clients attach a \"witness\" (a state proof) to transactions, removing the storage load that would otherwise cap how many shards can run.\n\n**4/** Consensus is thresholded proof-of-stake: validators stake NEAR and receive rotating block- and chunk-producer duties each epoch. The Doomslug gadget provides fast confirmations plus single-block \"doom finality\" when a supermajority of stake is honest.\n\n**5/** Accounts and keys are separate: one account can hold many keys. \"Function-call\" keys restrict signing to chosen contracts, methods, and a gas allowance, so apps can act for users without full account control, and relayers can cover gas on their behalf.\n\n**6/** Fees and execution: users pay gas priced dynamically by network load, and fees are burned. Execution is asynchronous — a transaction creates a receipt, and receipts can trigger further receipts across contracts and shards, powering cross-contract calls.\n\n**7/** Ethereum compatibility: Aurora is an EVM runtime deployed on NEAR, so Solidity contracts and standard ETH tooling can run with NEAR's throughput. The Rainbow Bridge moves assets between NEAR and Ethereum via on-chain light clients.\n\n**8/** Chain abstraction and AI: NEAR leans into a cross-chain UX layer — accounts, relayers, bridges — plus NEAR Intents, where competing solvers fill cross-chain swap requests so users specify outcomes, not routes.\n\n**9/** Takeaway: NEAR's bet is parallel execution (Nightshade), lean validators (stateless validation), fast finality (Doomslug), and low-friction accounts — a stack aimed at apps that feel like ordinary web software.",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T23:56:09.400Z",
+    "type": "distribution",
+    "order": "web-b534425aeec8",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 5.6,
+    "tx": "DTzf86KkeqWnZcrWK1wzTf9hYvQRWcEhj7jTq9hP6Pis"
+  },
+  {
+    "t": "2026-11-08T23:56:12.919Z",
+    "type": "distribution",
+    "order": "web-b534425aeec8",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.4,
+    "tx": "DaXLLfFrjzp8fvH9DPkKSi4GXq9L2K8cs4vbfzp196uU"
+  },
+  {
+    "t": "2026-11-08T23:56:12.919Z",
+    "type": "escrow_released",
+    "id": "web-b534425aeec8",
+    "profit": 8,
+    "treasury": 5.6,
+    "contributors": 2.4
+  }
+]
