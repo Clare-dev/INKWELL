@@ -38,14 +38,7 @@ export async function distribute(order, kind, payee, amount) {
   let tx; if (chain) { try { tx = await chain.release(order, payee, amount); } catch (e) { return log('blocked', { order, task: kind, reason: 'chain: ' + String(e.message).slice(0, 120) }); } }
   log('distribution', { order, kind, payee, amount, ...(tx && { tx }) });
 }
-// Writer: NEAR AI Cloud (OpenAI-compatible) if key is set, else a template so the sim needs no network.
-export async function draft(brief) {
-  const key = process.env.NEAR_AI_API_KEY; if (!key) return `Thread draft (offline): ${brief}`;
-  const r = await fetch('https://cloud-api.near.ai/v1/chat/completions', { method: 'POST',
-    headers: { 'content-type': 'application/json', authorization: `Bearer ${key}` },
-    body: JSON.stringify({ model: process.env.NEAR_AI_MODEL, messages: [{ role: 'user', content: `Write a short X thread: ${brief}` }] }) });
-  return (await r.json()).choices[0].message.content;
-}
+import { draft } from './ai.js';
 export async function runOrder(id, brief, price, token, bidders) {
   if (killed) return log('order_rejected', { id, reason: 'kill switch on' });
   if (price < cfg.minOrderPrice) return log('order_rejected', { id, reason: 'below minimum price' });
@@ -56,9 +49,9 @@ export async function runOrder(id, brief, price, token, bidders) {
     const w = auction(task, planned, bidders[task]); if (!w) continue;
     if (await pay(id, task, w.agent, w.price)) cost += w.price;
   }
-  const text = await draft(brief);
+  const text = await draft(brief, log);
   const profit = price - cost;
-  log('delivered', { id, preview: text.slice(0, 80), passed_check: true });
+  log('delivered', { id, preview: text.slice(0, 80), text: text.slice(0, 2500), passed_check: true });
   const treasury = +(profit * cfg.split.treasury).toFixed(2), contributors = +(profit * cfg.split.contributors).toFixed(2);
   if (chain) { await distribute(id, 'treasury', cfg.chain.treasury, treasury); await distribute(id, 'contributors', cfg.chain.contributors, contributors); }
   log('escrow_released', { id, profit, treasury, contributors });
