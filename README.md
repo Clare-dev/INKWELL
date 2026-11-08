@@ -22,7 +22,7 @@ Optional: set `NEAR_AI_API_KEY` and `NEAR_AI_MODEL` to draft with NEAR AI Cloud.
 
 ## Honest status
 - Real and runnable offline: all logic in `src/`, the simulation, the ledger page.
-- Escrow contract compiles with near-sdk-js. Chain mode, the setup script and the on-chain attack demos are written but **not yet run against testnet**; this section changes only once tx hashes exist.
+- **Run on NEAR testnet on 2026-11-08.** The escrow is deployed at `escrow.inkwell.testnet` ([explorer](https://testnet.nearblocks.io/address/escrow.inkwell.testnet)). `npm run setup` created the accounts, deployed and initialised the contract, and deleted the manager's full-access key. `npm run sim:chain` then ran a full order with real transactions: escrow deposit, sealed-bid payouts, and the treasury and contributor split. The complete ledger from that run, including every transaction hash, is saved in [`testnet-proof.json`](testnet-proof.json).
 - Intents payments are still simulated (no testnet exists), so the sale shows a token label only. NEAR AI attestation is not wired in, so we do not claim the Privacy track.
 - The deposit is made by a `customer` demo account, not by a real Intents swap.
 Baseline vs hackathon work: everything here was written during the hackathon window. License: MIT.
