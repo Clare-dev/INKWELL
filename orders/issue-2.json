@@ -1,0 +1,140 @@
+[
+  {
+    "t": "2026-11-08T13:13:11.970Z",
+    "type": "order_from_github",
+    "issue": "2",
+    "user": "Clare-dev"
+  },
+  {
+    "t": "2026-11-08T13:13:13.828Z",
+    "type": "sale",
+    "id": "issue-2",
+    "price": 45,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "7cECqkBETYyVSa1s5ZoMtgJmfRJU8qUu8StTuHKr2dkY"
+  },
+  {
+    "t": "2026-11-08T13:13:13.828Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 10
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 9
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T13:13:13.828Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 9 above plan 8"
+  },
+  {
+    "t": "2026-11-08T13:13:16.532Z",
+    "type": "payout",
+    "order": "issue-2",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "price": 8,
+    "tx": "459JHi4jaxUxtwgg5gy193wipuseLfrmXghUaryjugDs"
+  },
+  {
+    "t": "2026-11-08T13:13:16.532Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 9
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 9
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T13:13:20.198Z",
+    "type": "payout",
+    "order": "issue-2",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 9,
+    "tx": "9YcLj2FWDPjBWNZhyaV8czZALUSzErmKn6uqgX8NMBtN"
+  },
+  {
+    "t": "2026-11-08T13:13:20.198Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 5
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 6
+      }
+    ]
+  },
+  {
+    "t": "2026-11-08T13:13:23.714Z",
+    "type": "payout",
+    "order": "issue-2",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 5,
+    "tx": "A6ERLYwDHEk4xAz9r2BFZkT9qfYjFAtB5w3DgHrMwnwE"
+  },
+  {
+    "t": "2026-11-08T13:13:23.893Z",
+    "type": "attestation",
+    "model": "anthropic/claude-fable-5",
+    "nonce": "b7cf7a48fb19aa99...",
+    "nonce_echoed": false,
+    "has_intel_quote": false,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-08T13:13:34.236Z",
+    "type": "delivered",
+    "id": "issue-2",
+    "preview": "**Thread: Why Inkwell deserves a spot on your desk 🖋️ (1/6)**\n\n1/ Meet Inkwell ",
+    "text": "**Thread: Why Inkwell deserves a spot on your desk 🖋️ (1/6)**\n\n1/ Meet Inkwell — a writing tool built for people who still believe words deserve care. Whether you're drafting a novel or jotting daily notes, it's designed to make writing feel intentional again.\n\n2/ ✨ What sets it apart:\n• Clean, distraction-free design\n• Built to last, not to be replaced\n• Works the moment you pick it up — no setup, no friction\n\n3/ Writers tell us the same thing: the tools you use shape how you write. Inkwell slows you down just enough to think — and that's where the good sentences come from.\n\n4/ 🎯 Who it's for:\n• Journalers & note-takers\n• Students and academics\n• Anyone tired of typing everything into a glowing rectangle\n\n5/ We kept the price honest and the quality high. No subscriptions, no gimmicks — just a tool that does one thing well.\n\n6/ Ready to put pen to paper? Check out Inkwell today — link in bio. And if you're already a user, reply with what you're writing. We read every one. ✍️\n\n#Inkwell #WritingCommunity #AmWriting",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-08T13:13:37.796Z",
+    "type": "distribution",
+    "order": "issue-2",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 16.1,
+    "tx": "6BZS8AqSMHHxMdfk8r8qjs2foxLFBHo6ZyRN24LnceEc"
+  },
+  {
+    "t": "2026-11-08T13:13:41.437Z",
+    "type": "distribution",
+    "order": "issue-2",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 6.9,
+    "tx": "D9VAqUKCWZEAkjqBy2EYsXkz7gNE8VsXaqF839EpUFcL"
+  },
+  {
+    "t": "2026-11-08T13:13:41.437Z",
+    "type": "escrow_released",
+    "id": "issue-2",
+    "profit": 23,
+    "treasury": 16.1,
+    "contributors": 6.9
+  }
+]
