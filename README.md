@@ -22,7 +22,7 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 **1. Place a real testnet order (no setup, needs a GitHub account)**
 - Do: open https://github.com/Clare-dev/INKWELL/issues/new?template=order.yml, type a topic, keep the price at 45, submit.
 - See: within about a minute a bot replies on the issue with six "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and the draft. Example: issue #4 in this repo.
-- Limits: one order per person per hour, price 30 to 60 units (1 unit = 0.01 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
+- Limits: one order per person per hour, price 30 to 60 units (1 unit = 0.001 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
 
 **2. Check the attestation line**
 - Do: read the bot's reply from step 1.
@@ -41,7 +41,7 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 - Keys are written to `.keys.json`, which is gitignored. Never commit it.
 
 ## Rules the studio enforces (`config.json`)
-Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% treasury / 30% contributors, a payee blocklist, and a kill switch. Each payout must pass the kill switch, the payee check (allow / warn / block), and both caps. The contract adds its own per-payout cap (25 units).
+Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% treasury / 30% contributors, a payee blocklist, and a kill switch. Each payout must pass the kill switch, the payee check (allow / warn / block), and both caps. The contract adds its own per-payout cap of 0.25 NEAR, fixed when it was deployed.
 
 ## Tracks and how to verify them
 | Track | Feature | Check |
