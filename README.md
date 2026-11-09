@@ -69,5 +69,8 @@ Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% tr
 ## Security notes
 Keys are never committed. The GitHub order flow keeps the manager's keys and the NEAR AI key in GitHub secrets, and treats the issue text as data only: it is parsed, never run as code. The escrow contract has not been audited.
 
+## Privacy of orders (test version)
+The draft is written on a TEE-hosted model, but each web order's topic, ledger and finished draft are committed to this public repository under `orders/`. Do not enter anything private. Keeping drafts out of the public repository is planned.
+
 ## License
 MIT. See `LICENSE`.
