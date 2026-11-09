@@ -6,7 +6,8 @@ const { BRIEF = '', PRICE = '', ORDER_ID = '' } = process.env;
 if (!/^[a-z0-9]{8,24}$/.test(ORDER_ID)) process.exit(1);
 fs.mkdirSync('orders', { recursive: true });
 const out = `orders/web-${ORDER_ID}.json`, id = ORDER_ID;
-const stop = reason => { log('order_rejected', { id, reason }); save(out); process.exit(0); };
+const finish = () => { save('result-full.json'); const L = JSON.parse(fs.readFileSync('result-full.json')); fs.writeFileSync(out, JSON.stringify(L.map(({ text, preview, ...e }) => e), null, 2)); };
+const stop = reason => { log('order_rejected', { id, reason }); finish(); process.exit(0); };
 const brief = BRIEF.replace(/\s+/g, ' ').slice(0, 200).trim(), price = Math.round(Number(PRICE));
 if (!brief || !(price >= cfg.minOrderPrice && price <= 60)) stop('needs a topic and a price from 30 to 60 units');
 let recent = 0;
@@ -17,4 +18,4 @@ const bid = (a, plan) => { const p = plan + j(5) - 1; return A(a, p, p - 1 - j(4
 const bidders = { research: [bid('r1', 8), bid('r2', 8)], write: [bid('w1', 10), bid('w2', 10)], factcheck: [bid('f1', 5), bid('f2', 5)] };
 log('order_from_web', { id });
 try { await runOrder('web-' + id, brief, price, 'testnet NEAR', bidders); } catch (e) { log('order_rejected', { id, reason: 'the studio hit an error: ' + String(e.message).slice(0, 120) }); }
-save(out);
+finish();
