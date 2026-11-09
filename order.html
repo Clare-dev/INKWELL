@@ -16,7 +16,7 @@
 <p class="mu" id="msg" style="font-size:.86rem;margin:.8rem 0 0" aria-live="polite">A real order takes about a minute. “Preview” is a simulation that never leaves your browser.</p><p class="mu" style="font-size:.78rem;margin:.45rem 0 0">Test version: orders and drafts are saved publicly in the project’s repository. Please don’t enter anything private.</p>
 <details style="margin-top:1.4rem"><summary>Guardrail tests (preview only)</summary><p>Try to break the rules and watch them hold.</p><label>Budget used</label><div class="meter"><i id="mt"></i></div>
 <div class="tools"><button class="btn sm" id="a1">Pay a blocklisted address</button><button class="btn sm" id="a2">Overspend</button><button class="btn sm" id="kill">Kill switch: off</button></div></details></div>
-<div><div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div><div class="card" id="draft" hidden style="margin-top:1rem"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem"><span class="eyebrow" style="margin:0">Your draft</span><div class="tools" style="margin:0"><button type="button" class="btn sm" id="dcopy">Copy</button><button type="button" class="btn sm" id="dpdf">Download as PDF</button></div></div><div style="height:.7rem"></div><div id="dt" style="white-space:pre-wrap;font-size:.95rem"></div></div></div></div></main>
+<div><div class="card"><span class="eyebrow">Live activity</span><div class="tl" id="tl"></div></div><div class="card" id="draft" hidden style="margin-top:1rem"><div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.6rem"><span class="eyebrow" style="margin:0">Your draft</span><div class="tools" style="margin:0"><button type="button" class="btn sm" id="dcopy">Copy</button><button type="button" class="btn sm" id="dpdf">Download as PDF</button></div></div><div style="height:.7rem"></div><div id="dt" style="white-space:pre-wrap;font-size:.95rem"></div></div><div class="card" style="margin-top:1rem"><span class="eyebrow">Your orders</span><div id="hist" class="mu" style="font-size:.9rem"></div></div></div></div></main>
 <div id="printarea"><h1 id="pt"></h1><div class="meta" id="pm"></div><pre id="pb"></pre><div class="foot" id="pf2"></div></div><div id="foot"></div><script src="assets/config.js"></script><script src="assets/qrcode.js"></script><script src="assets/site.js"></script>
 <script>
 const E=i=>document.getElementById(i),log=(t,d)=>IW.add(E('tl'),t,d),msg=t=>E('msg').textContent=t,sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -24,19 +24,26 @@ let last=null;const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
 try{const q=qrcode(0,'M');q.addData(ADDR);q.make();E('qr').innerHTML=q.createSvgTag(4,1)}catch(e){E('qr').textContent=''}
 const amt=()=>E('amt').textContent='Suggested amount: '+((+E('price').value||30)*0.001).toFixed(3)+' NEAR';amt();E('price').oninput=amt;
 E('cp').onclick=async()=>{try{await navigator.clipboard.writeText(ADDR);E('cp').textContent='Copied'}catch(e){E('cp').textContent='Select the address to copy'}setTimeout(()=>E('cp').textContent='Copy address',1800)};
+const KEY='iw-orders',mine=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}},keep=o=>{try{localStorage.setItem(KEY,JSON.stringify([o,...mine().filter(x=>x.id!==o.id)].slice(0,30)))}catch(e){}};
+const api=(p,o)=>fetch(window.IW_RELAY.replace(/\/$/,'')+p,o).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Something went wrong.');return j});
+function show(rec){E('tl').textContent='';(rec.ledger||[]).forEach(({t,type,...d})=>log(type,d));const dl=(rec.ledger||[]).find(e=>e.type==='delivered');
+ if(dl&&dl.text){E('dt').textContent=dl.text;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:dl.text}}else E('draft').hidden=true}
+async function hist(){const l=mine(),box=E('hist');if(!l.length||!window.IW_RELAY){box.textContent='Your orders will appear here.';return}
+ let rows=l;try{rows=(await api('/history',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({ids:l.map(x=>x.id)})})).orders}catch(e){}
+ box.textContent='';rows.forEach(o=>{const b=document.createElement('button');b.type='button';b.className='btn sm';b.style.cssText='display:block;width:100%;text-align:left;margin:.3rem 0';b.textContent=`${o.kind||'Order'} · ${(o.brief||'').slice(0,40)} · ${o.status||''}`;
+  b.onclick=async()=>{try{const rec=await api('/order?id='+o.id);rec.id=o.id;show(rec);msg('Loaded from your history.')}catch(e){msg(e.message)}};box.append(b)})}
 E('real').onclick=async()=>{
   if(!window.IW_RELAY)return msg('Real orders are being switched on. Please try again soon, or use the preview.');
   const brief=E('brief').value.trim(),price=+E('price').value,kind=E('fmt').value;if(!brief)return msg('Please add a topic.');
   E('real').disabled=true;E('tl').textContent='';E('draft').hidden=true;msg('Sending your order…');
   try{
-    const r=await fetch(window.IW_RELAY,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief:'['+kind+'] '+brief,price})}),j=await r.json();
-    if(!r.ok)throw new Error(j.error||'Something went wrong.');
-    msg('Order accepted. Running on NEAR testnet, about a minute…');const url=`https://raw.githubusercontent.com/${REPO}/main/orders/web-${j.id}.json`,t0=Date.now();
-    while(Date.now()-t0<240000){await sleep(5000);const f=await fetch(url+'?t='+Date.now());
-      if(f.ok){const L=await f.json();L.forEach(({t,type,...d})=>log(type,d));const dl=L.find(e=>e.type==='delivered');
-        if(dl&&dl.text){E('dt').textContent=dl.text;E('draft').hidden=false;last={kind,brief,id:j.id,text:dl.text}}msg(dl?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
-    msg('This is taking longer than usual. Please check the Proof page or try again.');
+    const j=await api('/',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief:'['+kind+'] '+brief,price})});
+    keep({id:j.id,kind,brief:brief.slice(0,80),ts:Date.now()});hist();msg('Order accepted. Running on NEAR testnet, about a minute…');const t0=Date.now();
+    while(Date.now()-t0<240000){await sleep(4000);const rec=await api('/order?id='+j.id);
+      if(rec.status==='done'){rec.id=j.id;show(rec);hist();const ok=(rec.ledger||[]).some(e=>e.type==='delivered');msg(ok?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
+    msg('This is taking longer than usual. Open it later from “Your orders”.');
   }catch(e){msg(e.message)}finally{E('real').disabled=false}};
+hist();
 const CFG={cap:40,per:15,min:30,sp:[.7,.3],block:['drain-wallet.testnet','scam-agent.testnet'],par:'inkwell.testnet'};
 let spent=0,killed=false,oid=0;const meter=()=>E('mt').style.width=Math.min(100,spent/CFG.cap*100)+'%';
 const chk=a=>CFG.block.includes(a)?['block','on the shared blocklist']:a.endsWith('.'+CFG.par)?['allow','']:['warn','not a studio account'];
