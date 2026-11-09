@@ -1,0 +1,162 @@
+[
+  {
+    "t": "2026-11-09T01:13:25.212Z",
+    "type": "order_from_web",
+    "id": "979d94e1a6a9"
+  },
+  {
+    "t": "2026-11-09T01:13:28.914Z",
+    "type": "sale",
+    "id": "web-979d94e1a6a9",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "6mYeDjhBh33Ur3dXo4w2gYYiW1zebMeXCx3kge5TBTjp"
+  },
+  {
+    "t": "2026-11-09T01:13:28.914Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 9
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 10
+      }
+    ]
+  },
+  {
+    "t": "2026-11-09T01:13:28.914Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 9 above plan 8"
+  },
+  {
+    "t": "2026-11-09T01:13:31.915Z",
+    "type": "payout",
+    "order": "web-979d94e1a6a9",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 8,
+    "tx": "2Uzp33k8P2XB8dLG6Q6SVA75G5ZudQ8x36KC6yMFvErE"
+  },
+  {
+    "t": "2026-11-09T01:13:31.915Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 13
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 12
+      }
+    ]
+  },
+  {
+    "t": "2026-11-09T01:13:31.915Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 12 above plan 10"
+  },
+  {
+    "t": "2026-11-09T01:13:36.172Z",
+    "type": "payout",
+    "order": "web-979d94e1a6a9",
+    "task": "write",
+    "agent": "w2.inkwell.testnet",
+    "price": 10,
+    "tx": "CQ191n9dm6K2PTsvYeaikL48UNw5oUvdRT4ZLjEcngc2"
+  },
+  {
+    "t": "2026-11-09T01:13:36.173Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 6
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 7
+      }
+    ]
+  },
+  {
+    "t": "2026-11-09T01:13:36.173Z",
+    "type": "counter",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "offered": 5,
+    "reason": "quote 6 above plan 5"
+  },
+  {
+    "t": "2026-11-09T01:13:39.816Z",
+    "type": "payout",
+    "order": "web-979d94e1a6a9",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 5,
+    "tx": "AgCPKjkXvHjAkoRacfyXk6XBfUifwWRGXhE1tepsSeGE"
+  },
+  {
+    "t": "2026-11-09T01:13:40.304Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "5071ee2f0342313a...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-09T01:14:48.774Z",
+    "type": "delivered",
+    "id": "web-979d94e1a6a9",
+    "preview": "1/ Blockchain started with an idea: a peer-to-peer electronic cash system. Satos",
+    "text": "1/ Blockchain started with an idea: a peer-to-peer electronic cash system. Satoshi Nakamoto published the Bitcoin whitepaper in October 2008, and the Bitcoin network went live on January 3, 2009, when the genesis block was mined.\n\n2/ The core innovation was a distributed ledger: transactions grouped into blocks, cryptographically linked, and validated by many computers instead of one central authority. Consensus rules, like Bitcoin's proof of work, keep the shared record in sync.\n\n3/ In 2015, Ethereum launched (proposed by Vitalik Buterin in 2013), adding programmable smart contracts — code that runs on-chain. This turned blockchain from a payments ledger into a platform for decentralized applications.\n\n4/ 2017 brought the ICO boom, with startups raising billions selling tokens, followed by a sharp market downturn in 2018. The cycle exposed both the fundraising power and the speculation risk around blockchain projects.\n\n5/ Enterprise interest grew in parallel. Hyperledger, hosted by the Linux Foundation, launched collaborative blockchain frameworks in the mid-2010s, and companies explored supply-chain tracking, settlements, and identity use cases.\n\n6/ DeFi expanded rapidly around 2020, with lending, trading, and stablecoins running on smart contracts. NFTs went mainstream in 2021, and crypto's total market value peaked near $3 trillion that November before falling sharply in 2022.\n\n7/ Milestones since: Ethereum switched to proof of stake in September 2022 (\"The Merge\"), cutting its energy use by roughly 99%. In January 2024, the U.S. SEC approved the first spot Bitcoin ETFs, widening institutional access.\n\n8/ The takeaway: blockchain went from one whitepaper to a global infrastructure experiment in about 15 years. Scalability, regulation, and usability remain open challenges — but it's no longer a fringe idea.",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-09T01:14:53.157Z",
+    "type": "distribution",
+    "order": "web-979d94e1a6a9",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 4.9,
+    "tx": "36HoC2Mwvdu5n2J41HABSMs4sB8gR9eFMftbW21RfLeR"
+  },
+  {
+    "t": "2026-11-09T01:14:57.575Z",
+    "type": "distribution",
+    "order": "web-979d94e1a6a9",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.1,
+    "tx": "4V47fND5YEpgj53DgoVf7FytqD1HbaeTMgN9HLX5FkjQ"
+  },
+  {
+    "t": "2026-11-09T01:14:57.575Z",
+    "type": "escrow_released",
+    "id": "web-979d94e1a6a9",
+    "profit": 7,
+    "treasury": 4.9,
+    "contributors": 2.1
+  }
+]
