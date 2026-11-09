@@ -34,6 +34,16 @@ jobs:
           printf '%s' "$KEYS_JSON" > keys.json
           node scripts/run-web-order.js
           rm -f keys.json
+      - name: Send result to the private database
+        if: always()
+        env:
+          RELAY_URL: ${{ secrets.RELAY_URL }}
+          RESULT_SECRET: ${{ secrets.RESULT_SECRET }}
+          ORDER_ID: ${{ inputs.order_id }}
+        run: |
+          [ -f result-full.json ] || exit 0
+          node -e "const fs=require('fs');fs.writeFileSync('payload.json',JSON.stringify({id:process.env.ORDER_ID,ledger:JSON.parse(fs.readFileSync('result-full.json'))}))"
+          curl -sS -m 30 -X POST "$RELAY_URL/result" -H "x-inkwell-secret: $RESULT_SECRET" -H "content-type: application/json" --data-binary @payload.json
       - name: Save the ledger
         if: always()
         run: |
