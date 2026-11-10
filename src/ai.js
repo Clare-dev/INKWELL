@@ -54,11 +54,11 @@ export async function research(topic, log) {
   log('research', { note: out.length ? `Read ${out.length} public page(s): ${out.map(s => s.url).join(', ')}` : 'No public pages could be read for this topic', detail: diag.slice(0, 8) });
   return out;
 }
-export async function draft(brief, log) {
+export async function draft(brief, log, pre) {
   const key = process.env.NEAR_AI_API_KEY; if (!key) return `Thread draft (offline): ${brief}`;
   const m = /^\[(X thread|Article|Launch post)\] /.exec(brief), kind = m ? m[1] : 'X thread', topic = m ? brief.slice(m[0].length) : brief;
   try {
-    const sources = await research(topic, log);
+    const sources = pre || await research(topic, log);
     let model = process.env.NEAR_AI_MODEL;
     if (!model) { const x = await (await fetch(BASE + '/models', { headers: H(key) })).json(); model = (x.data || x)[0].id; }
     const nonce = crypto.randomBytes(32).toString('hex');
