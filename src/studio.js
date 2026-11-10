@@ -38,10 +38,12 @@ export async function distribute(order, kind, payee, amount) {
   let tx; if (chain) { try { tx = await chain.release(order, payee, amount); } catch (e) { return log('blocked', { order, task: kind, reason: 'chain: ' + String(e.message).slice(0, 120) }); } }
   log('distribution', { order, kind, payee, amount, ...(tx && { tx }) });
 }
-import { draft } from './ai.js';
+import { draft, research } from './ai.js';
 export async function runOrder(id, brief, price, token, bidders) {
   if (killed) return log('order_rejected', { id, reason: 'kill switch on' });
   if (price < cfg.minOrderPrice) return log('order_rejected', { id, reason: 'below minimum price' });
+    const sources = process.env.NEAR_AI_API_KEY ? await research(brief.replace(/^\[(X thread|Article|Launch post)\] /, ''), log) : null;
+  if (sources && !sources.length) return log('order_rejected', { id, reason: 'No public page could be read for this topic, so nothing was charged. Add the project website (for example near.org) and check it for typos.' });
   let tx; if (chain) { try { tx = await chain.createOrder(id, price); } catch (e) { return log('order_rejected', { id, reason: 'escrow deposit failed: ' + String(e.message).slice(0, 120) }); } }
   log('sale', { id, price, token, escrow: chain ? 'held on-chain' : 'held (simulated)', ...(tx && { tx }) });
   let cost = 0;
@@ -49,7 +51,7 @@ export async function runOrder(id, brief, price, token, bidders) {
     const w = auction(task, planned, bidders[task]); if (!w) continue;
     if (await pay(id, task, w.agent, w.price)) cost += w.price;
   }
-  const text = await draft(brief, log);
+const text = await draft(brief, log, sources);
   const profit = price - cost;
   log('delivered', { id, preview: text.slice(0, 80), text: text.slice(0, 6000), passed_check: true });
   const treasury = +(profit * cfg.split.treasury).toFixed(2), contributors = +(profit * cfg.split.contributors).toFixed(2);
