@@ -46,6 +46,12 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 - Change the account names in `config.json` to your own, then: `NEAR_OWNER_KEY=ed25519:... npm run build:contract && npm run setup && npm run sim:chain`.
 - Keys are written to `.keys.json`, which is gitignored. Never commit it.
 
+## How a web order runs, and outside services
+- **Order flow:** the order page sends the order to a small relay on Cloudflare Workers. The relay starts a GitHub Action, which runs the studio against NEAR testnet. The finished draft goes back to the relay's private store for 30 days. The public repository keeps only a redacted ledger.
+- **Research step (`src/ai.js`):** before writing, the studio reads public web pages about the topic. It reads any website named in the topic, plus its documentation and "about" pages. If a page is a JavaScript app with little text, it uses the free reader service r.jina.ai. If the topic names no website, it searches DuckDuckGo. Only public https pages with real domain names are read (no IP addresses or local names). The model is told to use only facts from these pages, and to say so when it finds none.
+- **Outside services:** Cloudflare (Workers and KV, for the relay), GitHub (Pages and Actions), NEAR AI Cloud (model and attestation), r.jina.ai (page reader), DuckDuckGo (search), Google Fonts (page fonts).
+- **What leaves the studio:** the words of a topic may be sent to DuckDuckGo as a search, and website addresses in a topic are sent to r.jina.ai. Do not put anything private in a topic.
+
 ## Payments
 - **Only NEAR testnet works today.** The order page shows a QR code and the address of the studio's demo wallet. In this test version the studio funds orders from that wallet, so sending coins is optional; it just keeps the wallet topped up. Payment is not yet checked per order.
 - **Other chains are not live.** SOL, ETH, Base and other deposits are shown as "coming soon". The plan is to use NEAR Intents on mainnet so customers can deposit from other chains. NEAR Intents has no testnet, so this cannot be shown here.
