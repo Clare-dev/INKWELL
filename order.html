@@ -32,17 +32,21 @@ async function hist(){const l=mine(),box=E('hist');if(!l.length||!window.IW_RELA
  let rows=l;try{rows=(await api('/history',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({ids:l.map(x=>x.id)})})).orders}catch(e){}
  box.textContent='';rows.forEach(o=>{const b=document.createElement('button');b.type='button';b.className='btn sm';b.style.cssText='display:block;width:100%;text-align:left;margin:.3rem 0';b.textContent=`${o.kind||'Order'} · ${(o.brief||'').slice(0,40)} · ${o.status||''}`;
   b.onclick=async()=>{try{const rec=await api('/order?id='+o.id);rec.id=o.id;show(rec);msg('Loaded from your history.')}catch(e){msg(e.message)}};box.append(b)})}
+let wt;const stopWait=()=>clearInterval(wt);
+function waiting(t0){stopWait();
+ E('tl').innerHTML='<div class="ev"><div><b>Running on NEAR testnet</b><span id="wt">Working… 0s. This takes about a minute.</span></div></div><div class="ev"><div><b>What happens next</b><span>Escrow deposit · sealed bids · guarded payouts · research and private draft · profit split</span></div></div><div class="ev"><div><b>Each step appears here, with its transaction link, when the order finishes.</b></div></div>';
+ wt=setInterval(()=>{const s=E('wt');if(s)s.textContent='Working… '+Math.round((Date.now()-t0)/1000)+'s. This takes about a minute.'},1000)}
 E('real').onclick=async()=>{
   if(!window.IW_RELAY)return msg('Real orders are being switched on. Please try again soon, or use the preview.');
   const brief=E('brief').value.trim(),price=+E('price').value,kind=E('fmt').value;if(!brief)return msg('Please add a topic.');
   E('real').disabled=true;E('tl').textContent='';E('draft').hidden=true;msg('Sending your order…');
   try{
     const j=await api('/',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief:'['+kind+'] '+brief,price})});
-    keep({id:j.id,kind,brief:brief.slice(0,80),ts:Date.now()});hist();msg('Order accepted. Running on NEAR testnet, about a minute…');const t0=Date.now();
+    keep({id:j.id,kind,brief:brief.slice(0,80),ts:Date.now()});hist();msg('Order accepted. Running on NEAR testnet, about a minute…');const t0=Date.now();waiting(t0);
     while(Date.now()-t0<240000){await sleep(4000);const rec=await api('/order?id='+j.id);
-      if(rec.status==='done'){rec.id=j.id;show(rec);hist();const ok=(rec.ledger||[]).some(e=>e.type==='delivered');msg(ok?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
+      if(rec.status==='done'){stopWait();rec.id=j.id;show(rec);hist();const ok=(rec.ledger||[]).some(e=>e.type==='delivered');msg(ok?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
     msg('This is taking longer than usual. Open it later from “Your orders”.');
-  }catch(e){msg(e.message)}finally{E('real').disabled=false}};
+  }catch(e){msg(e.message)}finally{stopWait();E('real').disabled=false}};
 hist();
 const CFG={cap:40,per:15,min:30,sp:[.7,.3],block:['drain-wallet.testnet','scam-agent.testnet'],par:'inkwell.testnet'};
 let spent=0,killed=false,oid=0;const meter=()=>E('mt').style.width=Math.min(100,spent/CFG.cap*100)+'%';
