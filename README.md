@@ -19,13 +19,18 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 
 ## Try it: do X, see Y
 
-**1. Place a real testnet order (no setup, needs a GitHub account)**
+**1. Place a real testnet order from the website (no setup, no account)**
+- Do: open https://clare-dev.github.io/INKWELL/order.html, type a topic that includes a project website (for example, an X thread about near.org), set the price to 45, and press "Place order on testnet".
+- See: after about a minute the page shows a live activity list with "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and your draft. If the studio cannot read any public page about the topic, it says so instead of inventing a draft.
+- Limits: 3 orders per hour per visitor, price 30 to 60 units (1 unit = 0.001 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
+
+**1b. Or order through a GitHub issue (needs a GitHub account)**
 - Do: open https://github.com/Clare-dev/INKWELL/issues/new?template=order.yml, type a topic, keep the price at 45, submit.
-- See: within about a minute a bot replies on the issue with six "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and the draft. Example: issue #4 in this repo.
-- Limits: one order per person per hour, price 30 to 60 units (1 unit = 0.001 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
+- See: within about a minute a bot replies on the issue with the same "view tx" links, the attestation line and the draft. Example: issue #4 in this repo.
+- Limits: one order per person per hour.
 
 **2. Check the attestation line**
-- Do: read the bot's reply from step 1.
+- Do: read the attestation row in the activity list from step 1 (or the bot's reply in step 1b).
 - See: `nonce echoed = true, Intel quote present = true`. This means the attestation came back, repeated our one-time nonce, and contained a quote. We do not verify the quote's signature ourselves; the full check is at https://cloud.near.ai/verify.
 
 **3. See the chain refuse an attack**
