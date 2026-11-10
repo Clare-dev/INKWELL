@@ -31,7 +31,7 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 **3. See the chain refuse an attack**
 - Do: open `testnet-proof.json` and find the two `chain_rejected` rows.
 - See: `over per-payout cap` (the contract refused a payout of 99 units) and `method name refund isn't allowed by the access key` (the manager's key tried a function it does not have). The row before each is the attempt.
-- - Note: this run was recorded on 8 Nov 2026, when 1 unit was 0.01 testnet NEAR. Then 99 units was 0.99 NEAR, above the contract's 0.25 NEAR cap. One unit is now 0.001 NEAR, so a 99-unit payout today (0.099 NEAR) is under that cap. The contract would still refuse it, because it is more than the order's escrow holds.
+- Note: this run was recorded on 8 Nov 2026, when 1 unit was 0.01 testnet NEAR. Then 99 units was 0.99 NEAR, above the contract's 0.25 NEAR cap. One unit is now 0.001 NEAR, so a 99-unit payout today (0.099 NEAR) is under that cap. The contract would still refuse it, because it is more than the order's escrow holds.
 
 **4. Run the offline simulation (no keys, no network)**
 - Do: `npm install`, then `npm run sim`, then `npm run serve` and open http://localhost:8080
