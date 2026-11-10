@@ -47,7 +47,7 @@ NEAR Intents is **not** used. The customer's "pay with" token is a label only (s
 - Keys are written to `.keys.json`, which is gitignored. Never commit it.
 
 ## How a web order runs, and outside services
-- **Order flow:** the order page sends the order to a small relay on Cloudflare Workers. The relay starts a GitHub Action, which runs the studio against NEAR testnet. The finished draft goes back to the relay's private store for 30 days. The public repository keeps only a redacted ledger.
+- **Order flow:** the order page sends the order to a small relay on Cloudflare Workers (source: `relay/worker.js`). The relay starts a GitHub Action, which runs the studio against NEAR testnet. The finished draft goes back to the relay's private store for 30 days. The public repository keeps only a redacted ledger.
 - **Research step (`src/ai.js`):** before writing, the studio reads public web pages about the topic. It reads any website named in the topic, plus its documentation and "about" pages. If a page is a JavaScript app with little text, it uses the free reader service r.jina.ai. If the topic names no website, it searches DuckDuckGo. Only public https pages with real domain names are read (no IP addresses or local names). The model is told to use only facts from these pages, and to say so when it finds none.
 - **Outside services:** Cloudflare (Workers and KV, for the relay), GitHub (Pages and Actions), NEAR AI Cloud (model and attestation), r.jina.ai (page reader), DuckDuckGo (search), Google Fonts (page fonts).
 - **What leaves the studio:** the words of a topic may be sent to DuckDuckGo as a search, and website addresses in a topic are sent to r.jina.ai. Do not put anything private in a topic.
@@ -82,7 +82,7 @@ Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% tr
 Keys are never committed. The GitHub order flow keeps the manager's keys and the NEAR AI key in GitHub secrets, and treats the issue text as data only: it is parsed, never run as code. The escrow contract has not been audited.
 
 ## Privacy of orders (test version)
-The draft is written on a TEE-hosted model. That is the only part described as private. Finished drafts are stored in a private store for 30 days. The public repository keeps only a redacted ledger of each web order under `orders/` (transaction links and steps, but not the draft text). The topic you type is not kept in that redacted ledger either. There are no accounts yet: anyone who has an order's link can read that order, so do not enter anything private. Earlier test orders (before this change) still contain draft text in the repository and its history.
+The draft is written on a TEE-hosted model. That is the only part described as private. Finished drafts are stored in a private store for 30 days. The public repository keeps only a redacted ledger of each web order under `orders/` (transaction links and steps, but not the draft text). The topic you type is not kept in that redacted ledger, but it is passed to a GitHub Action, so it may appear in that run's public log.. There are no accounts yet: anyone who has an order's link can read that order, so do not enter anything private. Earlier test orders (before this change) still contain draft text in the repository and its history.
 
 ## License
 MIT. See `LICENSE`.
