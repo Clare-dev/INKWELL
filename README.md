@@ -82,7 +82,7 @@ Daily spend cap 40 units, max 15 per task, minimum order 30, profit split 70% tr
 Keys are never committed. The GitHub order flow keeps the manager's keys and the NEAR AI key in GitHub secrets, and treats the issue text as data only: it is parsed, never run as code. The escrow contract has not been audited.
 
 ## Privacy of orders (test version)
-The draft is written on a TEE-hosted model. That is the only part described as private. Finished drafts are stored in a private store for 30 days. The public repository keeps only a redacted ledger of each web order under `orders/` (transaction links and steps, but not the draft text). The topic you type is not kept in that redacted ledger, but it is passed to a GitHub Action, so it may appear in that run's public log.. There are no accounts yet: anyone who has an order's link can read that order, so do not enter anything private. Earlier test orders (before this change) still contain draft text in the repository and its history.
+The draft is written on a TEE-hosted model. That is the only part described as private. Finished drafts are stored in a private store for 30 days. The public repository keeps only a redacted ledger of each web order under `orders/` (transaction links and steps, but not the draft text). The topic you type is not kept in that redacted ledger, but it is passed to a GitHub Action, so it may appear in that run's public log. There are no accounts yet: anyone who has an order's link can read that order, so do not enter anything private. Earlier test orders (before this change) still contain draft text in the repository and its history.
 
 ## License
 MIT. See `LICENSE`.
