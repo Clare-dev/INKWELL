@@ -1,0 +1,153 @@
+[
+  {
+    "t": "2026-11-10T12:35:39.456Z",
+    "type": "order_from_web",
+    "id": "f48ccb7296e2"
+  },
+  {
+    "t": "2026-11-10T12:35:41.850Z",
+    "type": "sale",
+    "id": "web-f48ccb7296e2",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "4DSoCgLsSCfvomibbWA5ezPDc5QNcHdDM9gKaavmcX7P"
+  },
+  {
+    "t": "2026-11-10T12:35:41.850Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 11
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 8
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T12:35:44.845Z",
+    "type": "payout",
+    "order": "web-f48ccb7296e2",
+    "task": "research",
+    "agent": "r2.inkwell.testnet",
+    "price": 8,
+    "tx": "8vFa5b6464AT21e5iAZv9t86YweTJTPRuRd86G9hRWS8"
+  },
+  {
+    "t": "2026-11-10T12:35:44.845Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 11
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 12
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T12:35:44.845Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 11 above plan 10"
+  },
+  {
+    "t": "2026-11-10T12:35:48.749Z",
+    "type": "payout",
+    "order": "web-f48ccb7296e2",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "price": 10,
+    "tx": "9771dnDg9SPP4PEDaJsHDhxKw7s2kacucEXFqYxqAex7"
+  },
+  {
+    "t": "2026-11-10T12:35:48.749Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 5
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 7
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T12:35:52.092Z",
+    "type": "payout",
+    "order": "web-f48ccb7296e2",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 5,
+    "tx": "DAWVNkNeCm75BVtotxc7BtnELWiTWB3s2gXQQi9PJgrw"
+  },
+  {
+    "t": "2026-11-10T12:35:57.751Z",
+    "type": "research",
+    "note": "Read 4 public page(s): https://hylo.so, https://docs.hylo.so/protocol-overview/collateral-rebalancing, https://docs.hylo.so, https://hylo.so/docs",
+    "detail": [
+      "https://hylo.so: direct fetch 429",
+      "https://hylo.so/docs: direct fetch 429"
+    ]
+  },
+  {
+    "t": "2026-11-10T12:35:57.917Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "8864fc44213ebf74...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-10T12:36:57.683Z",
+    "type": "delivered",
+    "id": "web-f48ccb7296e2",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-10T12:37:01.527Z",
+    "type": "distribution",
+    "order": "web-f48ccb7296e2",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 4.9,
+    "tx": "FdWv42LXWK3UBKAWv1Pefc9uF4w4HQq6e9qKL3QKY8UK"
+  },
+  {
+    "t": "2026-11-10T12:37:04.964Z",
+    "type": "distribution",
+    "order": "web-f48ccb7296e2",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 2.1,
+    "tx": "44kkzHpVaeZedAcyyk9mC8MYXd3hLHWKwwQFw866fWhE"
+  },
+  {
+    "t": "2026-11-10T12:37:04.964Z",
+    "type": "escrow_released",
+    "id": "web-f48ccb7296e2",
+    "profit": 7,
+    "treasury": 4.9,
+    "contributors": 2.1
+  }
+]
