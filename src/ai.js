@@ -8,32 +8,50 @@ const strip = h => h.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>|
 const meta = h => [...h.matchAll(/<title>([^<]*)<|<meta[^>]+(?:name|property)=["'](?:description|og:description|og:title)["'][^>]+content=["']([^"']*)/gi)].map(m => m[1] || m[2]).join(' · ');
 // Only public https pages with a real hostname: no IP addresses, no local or internal names.
 const safe = u => { try { const x = new URL(u); return x.protocol === 'https:' && /\.[a-z]{2,}$/i.test(x.hostname) && !/^\d+(\.\d+)*$/.test(x.hostname) && !/\.(local|internal|localhost)$/i.test(x.hostname); } catch { return false; } };
-async function page(url) {
-  if (!safe(url)) return '';
+const ok = u => { try { return safe(u) && u; } catch { return false; } };
+// Reads one page. Returns its text (meta description + visible text) and its links. Falls back to a reader service for pages built with JavaScript.
+async function page(url, diag) {
+  if (!safe(url)) return { text: '', links: [] };
+  let html = '', text = '', links = [];
   try {
     const r = await fetch(url, { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(12000), redirect: 'follow' });
-    if (!r.ok || !safe(r.url)) return '';
-    const h = (await r.text()).slice(0, 400000); let t = (meta(h) + ' ' + strip(h)).trim();
-    if (t.length < 600) { const j = await fetch('https://r.jina.ai/' + url, { signal: AbortSignal.timeout(20000) }); if (j.ok) t = (await j.text()).replace(/\s+/g, ' ').trim(); }
-    return t.slice(0, 5000);
-  } catch { return ''; }
+    if (r.ok && safe(r.url)) { html = (await r.text()).slice(0, 400000); text = (meta(html) + ' ' + strip(html)).trim(); links = [...html.matchAll(/<a[^>]+href=["']([^"'#]+)["']/gi)].map(m => { try { return new URL(m[1], r.url).href; } catch { return ''; } }); }
+    else diag.push(`${url}: direct fetch ${r.status}`);
+  } catch (e) { diag.push(`${url}: direct fetch failed`); }
+  if (text.length < 600) {
+    try {
+      const j = await fetch('https://r.jina.ai/' + url, { signal: AbortSignal.timeout(20000) });
+      if (j.ok) { const md = await j.text(); if (md.length > text.length) { text = md.replace(/\s+/g, ' ').trim(); links = links.concat([...md.matchAll(/\]\((https?:[^)\s]+)\)/g)].map(m => m[1])); } } else diag.push(`${url}: reader ${j.status}`);
+    } catch { diag.push(`${url}: reader failed`); }
+  }
+  return { text: text.slice(0, 3500), links: links.filter(l => safe(l)) };
 }
 async function search(q) {
   try {
     const r = await fetch('https://html.duckduckgo.com/html/?q=' + encodeURIComponent(q), { headers: { 'user-agent': UA }, signal: AbortSignal.timeout(12000) });
     const urls = [...(await r.text()).matchAll(/uddg=([^&"']+)/g)].map(m => decodeURIComponent(m[1])).filter(u => safe(u) && !/(youtube|facebook|instagram|tiktok|x\.com|twitter|linkedin|reddit)\./i.test(u));
-    return [...new Set(urls)].slice(0, 2);
+    return [...new Set(urls)].slice(0, 3);
   } catch { return []; }
 }
+// Reads a site's front page, then follows its documentation and "about" style links (many sites are only an app shell with little text).
+async function crawl(start, diag) {
+  const first = await page(start, diag), out = [], host = new URL(start).hostname.replace(/^www\./, ''), apex = host.split('.').slice(-2).join('.');
+  if (first.text.length >= 80) out.push({ url: start, text: first.text });
+  const hot = /docs|learn|about|faq|whitepaper|gitbook|blog|how-it|resources|guide/i;
+  const cand = [...new Set([...first.links, `https://docs.${apex}`, `https://${host}/docs`, `https://${host}/about`].map(u => u.replace(/\/$/, '')))]
+    .filter(u => { try { const h = new URL(u).hostname; return h.endsWith(apex) && u.replace(/\/$/, '') !== start.replace(/\/$/, ''); } catch { return false; } })
+    .sort((x, y) => hot.test(y) - hot.test(x)).slice(0, 6);
+  for (const u of cand) { if (out.length >= 4) break; const p = await page(u, diag); if (p.text.length >= 200) out.push({ url: u, text: p.text }); }
+  return out;
+}
 export async function research(topic, log) {
-  const urls = new Set();
+  const urls = new Set(), diag = [];
   for (const m of topic.matchAll(/https?:\/\/[^\s)"']+/gi)) urls.add(m[0]);
   for (const m of topic.matchAll(/\b((?:[a-z0-9-]+\.)+(?:com|io|so|xyz|org|net|ai|app|fi|finance|dev|co|gg|network|exchange|money|labs|fun|ag|build|trade|capital|tech|ly|me|cc))\b(\/[^\s)"']*)?/gi)) urls.add('https://' + m[1].toLowerCase() + (m[2] || ''));
-  let list = [...urls].slice(0, 2);
-  if (!list.length) list = await search(topic.replace(/[^\w\s.-]/g, ' ').trim() + ' crypto project');
-  const out = []; let total = 0;
-  for (const u of list) { const t = await page(u); if (t.length > 200 && total < 10000) { out.push({ url: u, text: t }); total += t.length; } }
-  log('research', { note: out.length ? `Read ${out.length} public page(s): ${out.map(s => s.url).join(', ')}` : 'No public pages could be read for this topic' });
+  let out = []; for (const u of [...urls].slice(0, 2)) out.push(...await crawl(u, diag));
+  if (!out.length) { const q = topic.replace(/https?:\/\/\S+/g, ' ').replace(/[^\w\s.-]/g, ' ').trim(); for (const u of await search(q + ' crypto protocol')) { const p = await page(u, diag); if (p.text.length >= 200) out.push({ url: u, text: p.text }); if (out.length >= 2) break; } }
+  let total = 0; out = out.filter(s => (total += s.text.length) <= 12000);
+  log('research', { note: out.length ? `Read ${out.length} public page(s): ${out.map(s => s.url).join(', ')}` : 'No public pages could be read for this topic', detail: diag.slice(0, 8) });
   return out;
 }
 export async function draft(brief, log) {
