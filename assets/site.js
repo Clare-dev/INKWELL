@@ -18,7 +18,7 @@ function fmt(t,d){switch(t){
  case'counter':return['Counter-offer',`${sh(d.agent)} quoted above plan; manager offered ${d.offered}`];
  case'walk_away':return['Manager walked away',sh(d.agent)+' would not meet the plan'];
  case'payout':return['Payout',`${d.task} → ${d.agent} · ${d.price} units`];
- case'delivered':return['Delivered',`${d.id} passed the fact-check`];
+ case'delivered':return['Delivered',`${d.id} · draft delivered`];
  case'distribution':return['Profit split',`${d.kind} receives ${d.amount} units`];
  case'escrow_released':return['Escrow released',`profit ${d.profit} · treasury ${d.treasury} · contributors ${d.contributors}`];
  case'attack':return['Attack attempt',d.what];
