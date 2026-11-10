@@ -1,0 +1,154 @@
+[
+  {
+    "t": "2026-11-10T08:05:54.112Z",
+    "type": "order_from_web",
+    "id": "a3d5368aff3d"
+  },
+  {
+    "t": "2026-11-10T08:05:56.378Z",
+    "type": "sale",
+    "id": "web-a3d5368aff3d",
+    "price": 30,
+    "token": "testnet NEAR",
+    "escrow": "held on-chain",
+    "tx": "EjN1KPDkDJQLDiKey86BFfxFBgPg8oXHRTDvUE3GzuiS"
+  },
+  {
+    "t": "2026-11-10T08:05:56.378Z",
+    "type": "bids_revealed",
+    "task": "research",
+    "bids": [
+      {
+        "agent": "r1.inkwell.testnet",
+        "price": 9
+      },
+      {
+        "agent": "r2.inkwell.testnet",
+        "price": 10
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T08:05:56.378Z",
+    "type": "counter",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "offered": 8,
+    "reason": "quote 9 above plan 8"
+  },
+  {
+    "t": "2026-11-10T08:05:59.045Z",
+    "type": "payout",
+    "order": "web-a3d5368aff3d",
+    "task": "research",
+    "agent": "r1.inkwell.testnet",
+    "price": 8,
+    "tx": "HuFLongY5xiV5NgXdaiDD1C23rVSsSF5HassHs2vLKBm"
+  },
+  {
+    "t": "2026-11-10T08:05:59.045Z",
+    "type": "bids_revealed",
+    "task": "write",
+    "bids": [
+      {
+        "agent": "w1.inkwell.testnet",
+        "price": 12
+      },
+      {
+        "agent": "w2.inkwell.testnet",
+        "price": 12
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T08:05:59.045Z",
+    "type": "counter",
+    "task": "write",
+    "agent": "w1.inkwell.testnet",
+    "offered": 10,
+    "reason": "quote 12 above plan 10"
+  },
+  {
+    "t": "2026-11-10T08:05:59.045Z",
+    "type": "walk_away",
+    "task": "write",
+    "agent": "w1.inkwell.testnet"
+  },
+  {
+    "t": "2026-11-10T08:05:59.045Z",
+    "type": "bids_revealed",
+    "task": "factcheck",
+    "bids": [
+      {
+        "agent": "f1.inkwell.testnet",
+        "price": 4
+      },
+      {
+        "agent": "f2.inkwell.testnet",
+        "price": 7
+      }
+    ]
+  },
+  {
+    "t": "2026-11-10T08:06:02.664Z",
+    "type": "payout",
+    "order": "web-a3d5368aff3d",
+    "task": "factcheck",
+    "agent": "f1.inkwell.testnet",
+    "price": 4,
+    "tx": "7rH1NXLt7pWH4XKpW5EBhVd9SxpBUfs2UfzVQYMQmPCV"
+  },
+  {
+    "t": "2026-11-10T08:06:02.733Z",
+    "type": "research",
+    "note": "No public pages could be read for this topic"
+  },
+  {
+    "t": "2026-11-10T08:06:02.995Z",
+    "type": "attestation",
+    "model": "z-ai/glm-5.3-flash",
+    "http": 200,
+    "fields": [
+      "gateway_attestation",
+      "model_attestations",
+      "ohttp_key_config",
+      "ohttp_attestation"
+    ],
+    "nonce": "9a70865059524cb8...",
+    "nonce_echoed": true,
+    "has_intel_quote": true,
+    "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+    "t": "2026-11-10T08:06:19.961Z",
+    "type": "delivered",
+    "id": "web-a3d5368aff3d",
+    "passed_check": true
+  },
+  {
+    "t": "2026-11-10T08:06:23.734Z",
+    "type": "distribution",
+    "order": "web-a3d5368aff3d",
+    "kind": "treasury",
+    "payee": "treasury.inkwell.testnet",
+    "amount": 12.6,
+    "tx": "972yLN9hgiVZga9reW1EoWUko88xcibhDVX5xnigFiqs"
+  },
+  {
+    "t": "2026-11-10T08:06:27.419Z",
+    "type": "distribution",
+    "order": "web-a3d5368aff3d",
+    "kind": "contributors",
+    "payee": "contributors.inkwell.testnet",
+    "amount": 5.4,
+    "tx": "HNdbxEBTWUQngZU4stfbB4SDH2ERGz6mW7d9wUUTtvAD"
+  },
+  {
+    "t": "2026-11-10T08:06:27.419Z",
+    "type": "escrow_released",
+    "id": "web-a3d5368aff3d",
+    "profit": 18,
+    "treasury": 12.6,
+    "contributors": 5.4
+  }
+]
