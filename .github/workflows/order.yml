@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npm install --omit=dev --ignore-scripts
+      - run: node -e "const fs=require('fs'),p=JSON.parse(fs.readFileSync('package.json'));delete p.devDependencies;fs.writeFileSync('package.json',JSON.stringify(p))" && npm install --omit=dev --ignore-scripts
       - name: Run order
         env:
           INKWELL_MODE: chain
