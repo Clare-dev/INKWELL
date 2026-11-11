@@ -69,7 +69,17 @@ E('a1').onclick=()=>{log('attack',{what:'A manipulated manager tries to pay a bl
 E('a2').onclick=()=>{log('attack',{what:'The manager tries to pay 99 units on one task'});pay('attack','write','w1.'+CFG.par,99)};
 E('kill').onclick=e=>{killed=!killed;log(killed?'kill':'resume',{});e.target.textContent='Kill switch: '+(killed?'on':'off')};
 
-E('dcopy').onclick=async()=>{if(!last)return;try{await navigator.clipboard.writeText(last.text);E('dcopy').textContent='Copied'}catch(e){E('dcopy').textContent='Select the text to copy'}setTimeout(()=>E('dcopy').textContent='Copy',1800)};
+async function replay(){
+ E('go').disabled=true;stopWait();E('tl').textContent='';E('draft').hidden=true;msg('Replaying a real testnet order…');
+ try{const rec=await (await fetch('demo-order.json',{cache:'no-store'})).json();
+  for(const {t,type,...d} of rec.ledger){log(type,d);
+   if(type==='delivered'){E('dt').textContent=rec.draft;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:rec.draft}}
+   await sleep(type==='delivered'?900:600)}
+  msg('Demo finished. This was a replay of a real order recorded on '+rec.recorded+'. Every row with a link is a real testnet transaction you can open.');
+ }catch(e){msg('Could not load the demo. Please try again.')}finally{E('go').disabled=false}}
+E('go').onclick=replay;
+ 
+ E('dcopy').onclick=async()=>{if(!last)return;try{await navigator.clipboard.writeText(last.text);E('dcopy').textContent='Copied'}catch(e){E('dcopy').textContent='Select the text to copy'}setTimeout(()=>E('dcopy').textContent='Copy',1800)};
 E('dpdf').onclick=()=>{if(!last)return;E('pt').textContent=last.brief.slice(0,90);E('pm').textContent=last.kind+' · written by Inkwell on NEAR testnet';E('pb').textContent=last.text;
  E('pf2').textContent='Order '+last.id+' · '+new Date().toISOString().slice(0,10)+' · test coins only';const t=document.title;document.title='Inkwell - '+last.brief.slice(0,40);window.print();setTimeout(()=>document.title=t,500)};
 </script>
