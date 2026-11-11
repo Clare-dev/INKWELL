@@ -77,5 +77,5 @@ export async function draft(brief, log, pre) {
     }
     if (!out) throw new Error('the private model did not answer in time');
     return out;
-  }   } catch (e) { log('ai_failed', { reason: String(e.message).slice(0, 100) }); return null; }
+  } catch (e) { log('ai_failed', { reason: String(e.message).slice(0, 100) }); return null; }
 }
