@@ -46,12 +46,17 @@ export async function runOrder(id, brief, price, token, bidders) {
   if (sources && !sources.length) return log('order_rejected', { id, reason: 'No public page could be read for this topic, so nothing was charged. Add the project website (for example near.org) and check it for typos.' });
   let tx; if (chain) { try { tx = await chain.createOrder(id, price); } catch (e) { return log('order_rejected', { id, reason: 'escrow deposit failed: ' + String(e.message).slice(0, 120) }); } }
   log('sale', { id, price, token, escrow: chain ? 'held on-chain' : 'held (simulated)', ...(tx && { tx }) });
+    const text = await draft(brief, log, sources);
+  if (text === null) {
+    let rtx; if (chain) { try { rtx = await chain.refund(id); } catch (e) { return log('order_failed', { id, reason: 'No draft was written and the refund failed: ' + String(e.message).slice(0, 120) }); } }
+    return log('order_refunded', { id, reason: 'The private model did not answer, so no draft was written. The escrow was returned and nobody was paid.', ...(rtx && { tx: rtx }) });
+  }
   let cost = 0;
   for (const [task, planned] of [['research', 8], ['write', 10], ['factcheck', 5]]) {
     const w = auction(task, planned, bidders[task]); if (!w) continue;
     if (await pay(id, task, w.agent, w.price)) cost += w.price;
   }
-const text = await draft(brief, log, sources);
+
   const profit = price - cost;
   log('delivered', { id, preview: text.slice(0, 80), text: text.slice(0, 6000), passed_check: true });
   const treasury = +(profit * cfg.split.treasury).toFixed(2), contributors = +(profit * cfg.split.contributors).toFixed(2);
