@@ -11,7 +11,7 @@ setT(root.dataset.theme||'light');$('#tg').onclick=()=>setT(root.dataset.theme==
 const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
 document.querySelectorAll('.rv').forEach(e=>io.observe(e));
 function count(el,to){if(matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=to;return}let t0;const f=t=>{t0??=t;const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
-const OK=['sale','payout','delivered','distribution','escrow_released','resume'],BAD=['blocked','chain_rejected','order_rejected','kill','walk_away'];
+const OK=['sale','payout','delivered','distribution','escrow_released','resume'],BAD=['blocked','chain_rejected','order_rejected','order_refunded','order_failed','ai_failed','kill','walk_away'];
 function fmt(t,d){switch(t){
  case'sale':return['Order received',`${d.id} · ${d.price} units · ${d.token} · escrow ${d.escrow}`];
  case'bids_revealed':return['Sealed bids',`${d.task}: `+d.bids.map(b=>`${sh(b.agent)} ${b.price}`).join(' vs ')];
@@ -26,7 +26,10 @@ function fmt(t,d){switch(t){
  case'chain_rejected':return['Refused on-chain',/per-payout cap/.test(d.reason)?'The contract refused: over the per-payout cap':/allowed by the access key/.test(d.reason)?'The access key refused: method not allowed':'Refused by the contract'];
  case'attestation':return['Private model attested',`${d.model} · nonce echoed: ${d.nonce_echoed} · hardware quote present: ${d.has_intel_quote}`];
  case'order_from_web':return['Order accepted','Running on NEAR testnet'];
- case'ai_failed':return['Writer fallback','The private model was unavailable, so a placeholder draft was used'];
+ case'ai_failed':return['Private model did not answer','No draft could be written'];
+ case'ai_retry':return['Retrying the private model','Attempt '+d.attempt+' did not answer in time'];
+ case'order_refunded':return['Order cancelled and refunded',d.reason];
+ case'order_failed':return['Order failed',d.reason];
  case'order_rejected':return['Order rejected',`${d.id} · ${d.reason}`];
  case'kill':return['Kill switch on','All payments and orders are halted'];
  case'resume':return['Kill switch off','Studio resumed'];
