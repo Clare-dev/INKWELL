@@ -35,8 +35,8 @@ async function hist(){const l=mine(),box=E('hist');if(!l.length||!window.IW_RELA
   b.onclick=async()=>{try{const rec=await api('/order?id='+o.id);rec.id=o.id;show(rec);msg('Loaded from your history.')}catch(e){msg(e.message)}};box.append(b)})}
 let wt;const stopWait=()=>clearInterval(wt);
 function waiting(t0){stopWait();
- E('tl').innerHTML='<div class="ev"><div><b>Running on NEAR testnet</b><span id="wt">Working… 0s. This takes about a minute.</span></div></div><div class="ev"><div><b>What happens next</b><span>Escrow deposit · sealed bids · guarded payouts · research and private draft · profit split</span></div></div><div class="ev"><div><b>Each step appears here, with its transaction link, when the order finishes.</b></div></div>';
- wt=setInterval(()=>{const s=E('wt');if(s)s.textContent='Working… '+Math.round((Date.now()-t0)/1000)+'s. This takes about a minute.'},1000)}
+ E('tl').innerHTML='<div class="ev"><div><b>Running on NEAR testnet</b><span id="wt">Working… 0s. Usually about a minute, longer when the AI is busy.</span></div></div><div class="ev"><div><b>What happens next</b><span>Escrow deposit · sealed bids · guarded payouts · research and private draft · profit split</span></div></div><div class="ev"><div><b>Each step appears here, with its transaction link, when the order finishes.</b></div></div>';
+ wt=setInterval(()=>{const s=E('wt');if(s)s.textContent='Working… '+Math.round((Date.now()-t0)/1000)+'s. Usually about a minute, longer when the AI is busy.'},1000)}
 E('real').onclick=async()=>{
   if(!window.IW_RELAY)return msg('Real orders are being switched on. Please try again soon, or use the preview.');
   const brief=E('brief').value.trim(),price=+E('price').value,kind=E('fmt').value;if(!brief)return msg('Please add a topic.');
@@ -44,7 +44,7 @@ E('real').onclick=async()=>{
   try{
     const j=await api('/',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({brief:'['+kind+'] '+brief,price})});
     keep({id:j.id,kind,brief:brief.slice(0,80),ts:Date.now()});hist();msg('Order accepted. Running on NEAR testnet, about a minute…');const t0=Date.now();waiting(t0);
-    while(Date.now()-t0<240000){await sleep(4000);const rec=await api('/order?id='+j.id);
+    while(Date.now()-t0<420000){await sleep(4000);const rec=await api('/order?id='+j.id);
       if(rec.status==='done'){stopWait();rec.id=j.id;show(rec);hist();const ok=(rec.ledger||[]).some(e=>e.type==='delivered');msg(ok?'Done. Every row with a link is a real testnet transaction.':'This order was not completed. See the activity for why.');return}}
     msg('This is taking longer than usual. Open it later from “Your orders”.');
   }catch(e){msg(e.message)}finally{stopWait();E('real').disabled=false}};
