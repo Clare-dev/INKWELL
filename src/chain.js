@@ -23,6 +23,10 @@ export async function createOrder(id, units) {
 export async function release(id, payee, units) {
   return (await call('manager', 'release', { id, payee, amount: yocto(units).toString() })).transaction.hash;
 }
+// Refund: the customer takes back whatever is left in an order's escrow (used when no draft could be written).
+export async function refund(id) {
+  return (await call('customer', 'refund', { id })).transaction.hash;
+}
 // For the attack demo: the manager's restricted key tries a method it is not allowed to call.
 export const attempt = (methodName, args) => call('manager', methodName, args);
 export const explorer = (tx) => C.explorer + tx;
