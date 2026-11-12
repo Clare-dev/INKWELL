@@ -71,7 +71,7 @@ export async function draft(brief, log, pre) {
     let out = '';
     for (let i = 0; i < 2 && !out; i++) {
       try {
-        const r = await fetch(BASE + '/chat/completions', { method: 'POST', headers: H(key), body, signal: AbortSignal.timeout(90000) });
+        const r = await fetch(BASE + '/chat/completions', { method: 'POST', headers: H(key), body, signal: AbortSignal.timeout(150000) });
         const j = await r.json();
         if (!r.ok || !j.choices) throw new Error('HTTP ' + r.status + ' ' + JSON.stringify(j).slice(0, 120));
         out = j.choices[0].message.content || '';      } catch (e) { log('ai_retry', { attempt: i + 1, reason: String(e.message).slice(0, 80) }); }
