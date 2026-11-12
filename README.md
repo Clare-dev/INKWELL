@@ -13,15 +13,19 @@ An AI content studio that runs itself on NEAR. A customer orders a short X threa
 | Function-call access key | The manager can only call `release` on the escrow. Its full-access key is deleted after setup. | `scripts/setup.js` |
 | Smart contract (near-sdk-js) | Escrow: holds each order's payment, releases it in capped payouts, refuses the rest. | `contract/escrow.js` |
 | Sub-accounts | Each agent, the customer, treasury and contributors are sub-accounts of `inkwell.testnet`. | `config.json`, `scripts/setup.js` |
-| NEAR AI Cloud (private inference, attestation) | The draft is written by the TEE model `z-ai/glm-5.3-flash`. A fresh attestation is fetched with a random nonce before each draft. | `src/ai.js` |
+| NEAR AI Cloud (private inference, attestation) | The draft is written by the TEE model `deepseek-ai/DeepSeek-V4.1-Flash-1017`. A fresh attestation is fetched with a random nonce before each draft. | `src/ai.js` |
 
 NEAR Intents is **not** used. The customer's "pay with" token is a label only (see "What is real" below).
 
 ## Try it: do X, see Y
 
-**1. Place a real testnet order from the website (no setup, no account)**
+**0. Watch the instant demo (10 seconds, nothing to wait for)**
+- Do: open https://clare-dev.github.io/INKWELL/order.html and press "Watch a demo (instant)".
+- See: a replay, row by row, of a real testnet order recorded on 12 Nov 2026 (an X thread about near.org), ending with the draft. It is a recording, not a new order, but every row with a link is a real testnet transaction you can open. To run a live order, use step 1.
+
+- **1. Place a real testnet order from the website (no setup, no account)**
 - Do: open https://clare-dev.github.io/INKWELL/order.html, type a topic that includes a project website (for example, an X thread about near.org), set the price to 45, and press "Place order on testnet".
-- See: after about a minute the page shows a live activity list with "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and your draft. If the studio cannot read any public page about the topic, it says so instead of inventing a draft.
+- See: after one to two minutes the page shows a live activity list with "view tx" links (escrow deposit, three payouts, treasury and contributor split), a line about the attestation, and your draft. If the studio cannot read any public page about the topic, the order is rejected before any payment is taken. If the private model does not answer, the escrow is refunded on-chain and nobody is paid; the activity shows a refund link.
 - Limits: 3 orders per hour per visitor, price 30 to 60 units (1 unit = 0.001 testnet NEAR). If the shared demo customer account is out of test coins, the order is rejected.
 
 **1b. Or order through a GitHub issue (needs a GitHub account)**
