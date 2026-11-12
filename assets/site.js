@@ -27,8 +27,7 @@ function fmt(t,d){switch(t){
  case'attestation':return['Private model attested',`${d.model} · nonce echoed: ${d.nonce_echoed} · hardware quote present: ${d.has_intel_quote}`];
  case'order_from_web':return['Order accepted','Running on NEAR testnet'];
  case'ai_failed':return['Private model did not answer','No draft could be written'];
- case'ai_retry':return['Retrying the private model','Attempt '+d.attempt+' did not answer in time'];
- case'order_refunded':return['Order cancelled and refunded',d.reason];
+ case'ai_retry':return['Retrying the private model','Attempt '+d.attempt+' failed: '+(d.reason||'no answer in time')]; case'order_refunded':return['Order cancelled and refunded',d.reason];
  case'order_failed':return['Order failed',d.reason];
  case'order_rejected':return['Order rejected',`${d.id} · ${d.reason}`];
  case'kill':return['Kill switch on','All payments and orders are halted'];
