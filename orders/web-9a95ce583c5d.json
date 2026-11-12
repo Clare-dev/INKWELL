@@ -1,0 +1,19 @@
+[
+  {
+    "t": "2026-11-12T19:04:48.838Z",
+    "type": "order_from_web",
+    "id": "9a95ce583c5d"
+  },
+  {
+    "t": "2026-11-12T19:04:48.988Z",
+    "type": "research",
+    "note": "No public pages could be read for this topic",
+    "detail": []
+  },
+  {
+    "t": "2026-11-12T19:04:48.988Z",
+    "type": "order_rejected",
+    "id": "web-9a95ce583c5d",
+    "reason": "No public page could be read for this topic, so nothing was charged. Add the project website (for example near.org) and check it for typos."
+  }
+]
