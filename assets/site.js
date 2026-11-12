@@ -3,7 +3,7 @@ const ICON={light:'<svg width="16" height="16" viewBox="0 0 24 24" fill="none" s
 const LOGO='<svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c4 6 8 9.5 8 14.5a8 8 0 0 1-16 0C8 12.500 12 9 16 3z" fill="var(--ac)"/><path d="M12 24h8" stroke="var(--bg)" stroke-width="2" stroke-linecap="round"/></svg>';
 const page=location.pathname.split('/').pop()||'index.html';
 const fav=document.createElement('link');fav.rel='icon';fav.href='data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path d="M16 3c4 6 8 9.5 8 14.5a8 8 0 0 1-16 0C8 12.5 12 9 16 3z" fill="#0b6b4a"/><path d="M12 24h8" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>');document.head.append(fav);
-const L=[['order.html','Order'],['proof.html','Proof'],['faq.html','FAQ']];
+const L=[['index.html','Home'],['order.html','Order'],['proof.html','Proof'],['faq.html','FAQ']];
 $('#top').outerHTML=`<header class="nav"><div class="w"><a class="logo" href="index.html">${LOGO}Inkwell</a><nav class="nl">${L.map(([h,t])=>`<a href="${h}" class="${page===h?'on':''}">${t}</a>`).join('')}<button class="tg" id="tg" aria-label="Toggle colour theme"></button><a class="btn pri sm" href="order.html">Place an order</a></nav></div></header>`;
 $('#foot').outerHTML=`<footer><div class="w"><span>Inkwell · built for NEAR HACKATHON 2026 · runs on NEAR testnet</span><nav>${L.map(([h,t])=>`<a href="${h}">${t}</a>`).join('')}</nav></div></footer>`;
 const root=document.documentElement,setT=t=>{root.dataset.theme=t;$('#tg').innerHTML=ICON[t];try{localStorage.setItem('iw-theme',t)}catch(e){}};
