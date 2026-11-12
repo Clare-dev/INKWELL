@@ -21,14 +21,15 @@
 <div id="printarea"><h1 id="pt"></h1><div class="meta" id="pm"></div><pre id="pb"></pre><div class="foot" id="pf2"></div></div><div id="foot"></div><script src="assets/config.js"></script><script src="assets/qrcode.js"></script><script src="assets/site.js"></script>
 <script>
 const E=i=>document.getElementById(i),log=(t,d)=>IW.add(E('tl'),t,d),msg=t=>E('msg').textContent=t,sleep=ms=>new Promise(r=>setTimeout(r,ms));
-let last=null;const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
+const clean=s=>String(s||'').replace(/\*\*/g,'').replace(/^#{1,6}\s+/gm,'');
+ let last=null;const REPO='Clare-dev/INKWELL',ADDR='customer.inkwell.testnet';
 try{const q=qrcode(0,'M');q.addData(ADDR);q.make();E('qr').innerHTML=q.createSvgTag(4,1)}catch(e){E('qr').textContent=''}
 const amt=()=>E('amt').textContent='Suggested amount: '+((+E('price').value||30)*0.001).toFixed(3)+' NEAR';amt();E('price').oninput=amt;
 E('cp').onclick=async()=>{try{await navigator.clipboard.writeText(ADDR);E('cp').textContent='Copied'}catch(e){E('cp').textContent='Select the address to copy'}setTimeout(()=>E('cp').textContent='Copy address',1800)};
 const KEY='iw-orders',mine=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch(e){return[]}},keep=o=>{try{localStorage.setItem(KEY,JSON.stringify([o,...mine().filter(x=>x.id!==o.id)].slice(0,30)))}catch(e){}};
 const api=(p,o)=>fetch(window.IW_RELAY.replace(/\/$/,'')+p,o).then(async r=>{const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Something went wrong.');return j});
 function show(rec){E('tl').textContent='';(rec.ledger||[]).forEach(({t,type,...d})=>log(type,d));const dl=(rec.ledger||[]).find(e=>e.type==='delivered');
- if(dl&&dl.text){E('dt').textContent=dl.text;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:dl.text}}else E('draft').hidden=true}
+ if(dl&&dl.text){const tx=clean(dl.text);E('dt').textContent=tx;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:tx}}else E('draft').hidden=true}
 async function hist(){const l=mine(),box=E('hist');if(!l.length||!window.IW_RELAY){box.textContent='Your orders will appear here.';return}
  let rows=l;try{rows=(await api('/history',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({ids:l.map(x=>x.id)})})).orders}catch(e){}
  box.textContent='';rows.forEach(o=>{const b=document.createElement('button');b.type='button';b.className='btn sm';b.style.cssText='display:block;width:100%;text-align:left;margin:.3rem 0';b.textContent=`${o.kind||'Order'} · ${(o.brief||'').slice(0,40)} · ${o.status||''}`;
@@ -73,7 +74,7 @@ async function replay(){
  E('go').disabled=true;stopWait();E('tl').textContent='';E('draft').hidden=true;msg('Replaying a real testnet order…');
  try{const rec=await (await fetch('demo-order.json',{cache:'no-store'})).json();
   for(const {t,type,...d} of rec.ledger){log(type,d);
-   if(type==='delivered'){E('dt').textContent=rec.draft;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:rec.draft}}
+   if(type==='delivered'){const tx=clean(rec.draft);E('dt').textContent=tx;E('draft').hidden=false;last={kind:rec.kind,brief:rec.brief,id:rec.id,text:tx}}
    await sleep(type==='delivered'?900:600)}
   msg('Demo finished. This was a replay of a real order recorded on '+rec.recorded+'. Every row with a link is a real testnet transaction you can open.');
  }catch(e){msg('Could not load the demo. Please try again.')}finally{E('go').disabled=false}}
