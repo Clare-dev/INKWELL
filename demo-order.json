@@ -1,31 +1,53 @@
 {
- "id": "web-876f24f74ddd",
- "kind": "Article",
- "brief": "a detailed article on why NEAR.ORG will succeed",
- "recorded": "10 Nov 2026",
+ "id": "web-e0001d9c7219",
+ "kind": "X thread",
+ "brief": "an X thread about near.org",
+ "recorded": "12 Nov 2026",
  "ledger": [
   {
-   "t": "2026-11-10T18:12:57.494Z",
+   "t": "2026-11-12T13:48:31.021Z",
    "type": "order_from_web",
-   "id": "876f24f74ddd"
+   "id": "e0001d9c7219"
   },
   {
-   "t": "2026-11-10T18:12:59.785Z",
+   "t": "2026-11-12T13:48:31.631Z",
+   "type": "research",
+   "note": "Read 3 public page(s): https://near.org, https://docs.near.org, https://www.near.org/blog/what-is-near-protocol",
+   "detail": []
+  },
+  {
+   "t": "2026-11-12T13:48:33.669Z",
    "type": "sale",
-   "id": "web-876f24f74ddd",
-   "price": 30,
+   "id": "web-e0001d9c7219",
+   "price": 45,
    "token": "testnet NEAR",
    "escrow": "held on-chain",
-   "tx": "D4MLZ2JKbVLcLnNRbNwJMbME5CRpb2dWBmvFXLJNJFGE"
+   "tx": "7DbnTFbdqedZJxASosPDeJpJDkuW3rTqmVNmgWbpPPnk"
   },
   {
-   "t": "2026-11-10T18:12:59.785Z",
+   "t": "2026-11-12T13:48:33.860Z",
+   "type": "attestation",
+   "model": "deepseek-ai/DeepSeek-V4.1-Flash-1017",
+   "http": 200,
+   "fields": [
+    "gateway_attestation",
+    "model_attestations",
+    "ohttp_key_config",
+    "ohttp_attestation"
+   ],
+   "nonce": "fcc9d50eebbafb2a...",
+   "nonce_echoed": true,
+   "has_intel_quote": true,
+   "full_check": "https://cloud.near.ai/verify"
+  },
+  {
+   "t": "2026-11-12T13:49:01.323Z",
    "type": "bids_revealed",
    "task": "research",
    "bids": [
     {
      "agent": "r1.inkwell.testnet",
-     "price": 10
+     "price": 7
     },
     {
      "agent": "r2.inkwell.testnet",
@@ -34,16 +56,16 @@
    ]
   },
   {
-   "t": "2026-11-10T18:13:02.623Z",
+   "t": "2026-11-12T13:49:03.976Z",
    "type": "payout",
-   "order": "web-876f24f74ddd",
+   "order": "web-e0001d9c7219",
    "task": "research",
-   "agent": "r2.inkwell.testnet",
+   "agent": "r1.inkwell.testnet",
    "price": 7,
-   "tx": "G5VvDVbtEH9V1c5499jUX7Xss8xdSb9wJxS3XNXMukEC"
+   "tx": "DRxy7j48z56hSwh8SfFmeP2odem2YUNoErBQYvAHg3Yg"
   },
   {
-   "t": "2026-11-10T18:13:02.623Z",
+   "t": "2026-11-12T13:49:03.976Z",
    "type": "bids_revealed",
    "task": "write",
    "bids": [
@@ -58,22 +80,22 @@
    ]
   },
   {
-   "t": "2026-11-10T18:13:06.305Z",
+   "t": "2026-11-12T13:49:07.671Z",
    "type": "payout",
-   "order": "web-876f24f74ddd",
+   "order": "web-e0001d9c7219",
    "task": "write",
    "agent": "w1.inkwell.testnet",
    "price": 10,
-   "tx": "DThQkRgkXahjV3aXcASGP4c4SGgVo61JmWQG52MVXMwV"
+   "tx": "3LepZCcKRbUxxNJimtZFAy5RLeV7nBUdTACX5hL1viEt"
   },
   {
-   "t": "2026-11-10T18:13:06.305Z",
+   "t": "2026-11-12T13:49:07.671Z",
    "type": "bids_revealed",
    "task": "factcheck",
    "bids": [
     {
      "agent": "f1.inkwell.testnet",
-     "price": 8
+     "price": 7
     },
     {
      "agent": "f2.inkwell.testnet",
@@ -82,76 +104,54 @@
    ]
   },
   {
-   "t": "2026-11-10T18:13:06.305Z",
+   "t": "2026-11-12T13:49:07.671Z",
    "type": "counter",
    "task": "factcheck",
    "agent": "f1.inkwell.testnet",
    "offered": 5,
-   "reason": "quote 8 above plan 5"
+   "reason": "quote 7 above plan 5"
   },
   {
-   "t": "2026-11-10T18:13:09.937Z",
+   "t": "2026-11-12T13:49:11.227Z",
    "type": "payout",
-   "order": "web-876f24f74ddd",
+   "order": "web-e0001d9c7219",
    "task": "factcheck",
    "agent": "f1.inkwell.testnet",
    "price": 5,
-   "tx": "4F9FPhWMzDTBaodyHSepZqqiFEfixtBnUQMykUQ353ua"
+   "tx": "9WeCibjhkm1jvLsEovLsD9dSDXVbsBTByNpGpFJ99PJr"
   },
   {
-   "t": "2026-11-10T18:13:10.552Z",
-   "type": "research",
-   "note": "Read 3 public page(s): https://near.org, https://docs.near.org, https://www.near.org/blog/what-is-near-protocol",
-   "detail": []
-  },
-  {
-   "t": "2026-11-10T18:13:10.736Z",
-   "type": "attestation",
-   "model": "z-ai/glm-5.3-flash",
-   "http": 200,
-   "fields": [
-    "gateway_attestation",
-    "model_attestations",
-    "ohttp_key_config",
-    "ohttp_attestation"
-   ],
-   "nonce": "075dd11a7156c3f9...",
-   "nonce_echoed": true,
-   "has_intel_quote": true,
-   "full_check": "https://cloud.near.ai/verify"
-  },
-  {
-   "t": "2026-11-10T18:16:33.343Z",
+   "t": "2026-11-12T13:49:11.227Z",
    "type": "delivered",
-   "id": "web-876f24f74ddd",
+   "id": "web-e0001d9c7219",
    "passed_check": true
   },
   {
-   "t": "2026-11-10T18:16:36.865Z",
+   "t": "2026-11-12T13:49:14.933Z",
    "type": "distribution",
-   "order": "web-876f24f74ddd",
+   "order": "web-e0001d9c7219",
    "kind": "treasury",
    "payee": "treasury.inkwell.testnet",
-   "amount": 5.6,
-   "tx": "4GGJA97K4FpTcw1BjhoabAyFYZDdLDzbRTZ6Sy2iHuf2"
+   "amount": 16.1,
+   "tx": "CFK9ncbDnY4VjaKxvzkiFDSDubpfdX3yzeTMnJgSHxK8"
   },
   {
-   "t": "2026-11-10T18:16:40.502Z",
+   "t": "2026-11-12T13:49:18.479Z",
    "type": "distribution",
-   "order": "web-876f24f74ddd",
+   "order": "web-e0001d9c7219",
    "kind": "contributors",
    "payee": "contributors.inkwell.testnet",
-   "amount": 2.4,
-   "tx": "EM1aadR7tEn9iBY4qQyq3JquG1K4kAYRKQ1innLdqqap"
+   "amount": 6.9,
+   "tx": "Fti8KcakvkMqozR9nsPkmfzYMh2CdnwDzLUrsnpVdBWC"
   },
   {
-   "t": "2026-11-10T18:16:40.502Z",
+   "t": "2026-11-12T13:49:18.479Z",
    "type": "escrow_released",
-   "id": "web-876f24f74ddd",
-   "profit": 8,
-   "treasury": 5.6,
-   "contributors": 2.4
+   "id": "web-e0001d9c7219",
+   "profit": 23,
+   "treasury": 16.1,
+   "contributors": 6.9
   }
  ],
- "draft": "# Why NEAR Is Built to Succeed in the Agent Economy\n\nNEAR bills itself as \"the currency of agents\": open infrastructure powering an economy where AI agents transact on behalf of users. Its own materials point to several concrete reasons why it is positioned to win that role.\n\n## A thesis matched to where commerce is heading\n\nNEAR's definitive guide (March 2026) argues that commerce is becoming agentic — AI systems are moving from assistants to market participants — and the open question is which infrastructure they will use to move value. NEAR's answer is to be the unified commerce layer: cross-chain execution, confidential settlement, and verifiable AI in one stack, with users keeping ownership of their assets and intelligence.\n\n## Technology that is already proven\n\nNEAR Protocol is described as fully sharded and quantum-adaptive, with 100% mainnet uptime for over five years, support for 1 million TPS, 600ms blocks, and 1.2s finality. The developer documentation adds near-zero fees (about $0.002 on average), refundable storage, automatic scaling without downtime or hard forks, Rust smart contracts, Chain Signatures for controlling accounts on Bitcoin, Ethereum, and Solana, and AI inference inside Trusted Execution Environments.\n\n## Real usage and integrations\n\nAdoption is documented, not hypothetical. NEAR Intents — where users state a desired outcome and solvers compete to fulfill it — has processed $33B+ in volume with sub-cent fees and sub-second settlement, and is integrated by Ledger, Brave Wallet, Infinex, ThorSwap, and HOT Wallet. The near.com interface offers one account across 35+ chains and 125+ assets. NEAR AI's private inference already serves Abound, Brave, and Venice AI, with IronClaw isolating credentials inside hardware-enforced TEEs.\n\n## Value capture and governance\n\nNEAR's tokenomics feature a fully unlocked supply, protocol revenue flowing to buybacks, and a deflationary trajectory; the blog also cites a now-live fee switch turning product growth into token value. House of Stake, a stake-based governance system live on mainnet, coordinates upgrades, economic parameters, and treasury decisions through onchain ratification.\n\n## Founders with rare credentials\n\nFounded in 2017 by Illia Polosukhin and Alexander Skidanov, NEAR sits at the intersection of AI and distributed systems: Polosukhin co-authored \"Attention Is All You Need\" — the Transformer paper — while Skidanov built production-grade distributed databases at MemSQL/SingleStore. As Polosukhin puts it, \"The agentic economy can only take shape if the agents are secure.\"\n\nNo outcome is guaranteed, but on its own evidence NEAR pairs a timely thesis with proven infrastructure, documented usage, and aligned economics.\n\nSources:\n- https://near.org\n- https://docs.near.org\n- https://www.near.org/blog/what-is-near-protocol"
+ "draft": "**1/**\nNEAR is the open infrastructure powering the agent economy. It unifies liquidity across 35+ chains, keeps execution and inference confidential, and scales to over 1 million TPS. Here's what's actually in the stack 🧵\n\n**2/**\nWhat is NEAR? Open infrastructure combining cross-chain execution, confidential settlement, private inference, and a secure agent harness. Co-founded by Illia Polosukhin, co-author of \"Attention Is All You Need.\"\n\n**3/**\nnear.com is the front door: one account, trade across 35+ chains and 125+ assets. Toggle on Confidential Mode to execute inside a private shard. No manual gas juggling or bridging required. Powered by NEAR Intents.\n\n**4/**\nNEAR Intents handles universal cross-chain execution. Integrated by Ledger, Brave Wallet, Infinex, ThorSwap, HOT Wallet and leading DeFi protocols — with sub-cent fees and sub-second settlement.\n\n**5/**\nNEAR AI provides private inference and a secure agent harness. It serves Abound, Brave and Venice AI. IronClaw sandboxes tools and isolates credentials inside hardware-enforced TEEs, so your secrets never reach the model.\n\n**6/**\nNEAR Protocol is the settlement layer: fully sharded, quantum-adaptive, with 100% uptime on mainnet for over 5 years. 1 million TPS, 600ms blocks, 1.2s finality. The docs add: no reorgs, average tx fees of $0.002.\n\n**7/**\nTokenomics: a fully unlocked token supply, protocol revenue flowing to NEAR buybacks, and a deflationary trajectory. The NEAR blog describes a now-live fee switch and token buybacks.\n\n**8/**\nGovernance: House of Stake, NEAR's stake-based governance system, is live on mainnet — coordinating protocol upgrades, economic parameters and treasury decisions through onchain ratification.\n\n**9/**\nFor builders: write WASM contracts in Rust with NEAR's official SDK, use Chain Signatures to control accounts on Bitcoin, Ethereum, Solana and more, and run AI inference inside TEEs. Docs at docs.near.org.\n\n**10/**\nIllia Polosukhin: \"The infrastructure choices we make now will determine what is possible later. The agentic economy can only take shape if the agents are secure.\"\n\nSources:\nhttps://near.org\nhttps://docs.near.org\nhttps://www.near.org/blog/what-is-near-protocol"
 }
