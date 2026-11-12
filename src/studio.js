@@ -58,7 +58,7 @@ export async function runOrder(id, brief, price, token, bidders) {
   }
 
   const profit = price - cost;
-  log('delivered', { id, preview: text.slice(0, 80), text: text.slice(0, 6000), passed_check: true });
+  log('delivered', { id, preview: text.slice(0, 80), text: text.slice(0, 6000) });
   const treasury = +(profit * cfg.split.treasury).toFixed(2), contributors = +(profit * cfg.split.contributors).toFixed(2);
   if (chain) { await distribute(id, 'treasury', cfg.chain.treasury, treasury); await distribute(id, 'contributors', cfg.chain.contributors, contributors); }
   log('escrow_released', { id, profit, treasury, contributors });
