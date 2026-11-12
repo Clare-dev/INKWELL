@@ -1,12 +1,12 @@
 // Cloudflare Worker: starts orders, stores results in a private KV database, and serves them back by order id.
 // Secrets (GITHUB_TOKEN, RESULT_SECRET) live only in this Worker's settings. They are never in the site or the repo.
-const ALLOW = 'https://clare-dev.github.io', TTL = 60 * 60 * 24 * 30, hits = new Map();
+const ALLOWED = ['https://clare-dev.github.io', 'https://inkwell-virid-two.vercel.app'], TTL = 60 * 60 * 24 * 30, hits = new Map();
 const ok = id => /^[a-z0-9]{8,24}$/.test(id || '');
 const json = (o, s, h) => new Response(JSON.stringify(o), { status: s, headers: { ...h, 'content-type': 'application/json' } });
 const get = async (env, id) => JSON.parse((await env.ORDERS.get('order:' + id)) || 'null');
 export default {
   async fetch(req, env) {
-    const cors = { 'access-control-allow-origin': ALLOW, 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' };
+    const cors = { 'access-control-allow-origin': ALLOWED.includes(req.headers.get('origin')) ? req.headers.get('origin') : ALLOWED[0], vary: 'origin', 'access-control-allow-methods': 'GET, POST, OPTIONS', 'access-control-allow-headers': 'content-type' };
     const url = new URL(req.url), path = url.pathname;
     if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     // 1. The GitHub job posts the finished order here (needs the shared secret).
@@ -19,7 +19,7 @@ export default {
       return json({ ok: true }, 200, cors);
     }
     // Everything else must come from the website.
-    if (req.headers.get('origin') !== ALLOW) return json({ error: 'Not allowed' }, 403, cors);
+    if (!ALLOWED.includes(req.headers.get('origin'))) return json({ error: 'Not allowed' }, 403, cors);
     // 2. Read one order by its id.
     if (path === '/order' && req.method === 'GET') {
       const id = url.searchParams.get('id'); if (!ok(id)) return json({ error: 'Bad id' }, 400, cors);
